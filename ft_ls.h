@@ -54,7 +54,7 @@ void	lst_add(t_lst **head, t_lst *new);
 
 char	*check_path(char *path, char *o_path, int n);
 void	g_link(char *path, int n);
-int	ft_chmod(char *rights);
+int		ft_chmod(char *rights);
 char	*g_rights(struct stat file_stat, char *rights);
 void	swap(t_lst *p1, t_lst *p2);
 void	sort_ascii(t_lst *head);

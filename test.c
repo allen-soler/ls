@@ -8,12 +8,13 @@ void	ft_print(t_lst *root)
 	while (current)
 	{
 		printf("%s\n", current->content);
+		sort_ascii(current->child);
 		while (current->child)
 		{
-			printf("%s\n", current->child->content);
+			printf("%s ", current->child->content);
 			current->child = current->child->next;
 		}
-		printf("\n");
+		printf("\n\n");
 		current = current->next;
 	}
 }
@@ -24,7 +25,10 @@ t_lst	*new_node(char *name, int data)
 
 	if (!(new_node = malloc(sizeof(t_lst))))
 		return (0);
-	new_node->content = name;
+	if (name == NULL)
+		new_node->content = NULL;
+	else
+		new_node->content = ft_strdup(name);
 	new_node->data = data;
 	new_node->next = NULL;
 	new_node->child = NULL;

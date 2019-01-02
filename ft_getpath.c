@@ -45,7 +45,7 @@ void	sort_ascii(t_lst *head)
 	}
 }
 
-void	add_path(char *path, t_lst **head, int n, int i)
+void	add_path(char *path, t_lst *head, int n, int i)
 {
 	char			*d_path;
 	t_lst			*current;
@@ -55,7 +55,7 @@ void	add_path(char *path, t_lst **head, int n, int i)
 	d_path = NULL;
 	if (!(d = opendir(path)))
 		return;
-	current = add_child((*head), path, i);
+	current = add_child(head, path, i);
 	while ((sd = readdir(d)) != NULL)
 	{
 		if (sd->d_name[0] != '.')
@@ -74,8 +74,8 @@ int	main(int ac, char **av)
 	t_lst	*root;
 
 	root = NULL;
-	root = new_node(0,0);
-	add_path("./", &root, 0, 0);
+	root = new_node(NULL,0);
+	add_path("./", root, 0, 0);
 	ft_print(root);
 	return (0);
 }
