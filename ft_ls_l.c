@@ -20,34 +20,6 @@ char	*get_time(struct stat date)
 	return (f_time);
 }
 
-void	show_dir_content(char *path)
-{
-	char			*d_path;
-	DIR				*dir;
-	char			*tmp;
-
-	dir = opendir(path);
-	if (dir == NULL)
-		return ;
-	g_link(path, 0);
-	while ((sd = readdir(dir)) != NULL)
-	{
-		tmp = ft_strjoin(path, sd->d_name);
-		stat(tmp, &f_stat);
-		if (sd->d_name[0] != '.')
-			ft_ls_l(sd->d_name, f_stat);
-		if (sd->d_type == DT_DIR && sd->d_name[0] != '.')
-			d_path = check_path(sd->d_name, path, 0);
-		free(tmp);
-	}
-	closedir(dir);
-	if (readdir(dir) == NULL && d_path != NULL)
-	{
-		printf("%s\n", check_path(d_path, path, 1));
-		show_dir_content(d_path);
-	}
-}
-
 void	ft_ls_l(char *name, struct stat fstat)
 {
 	char			*rights;

@@ -82,9 +82,27 @@ int		ft_chmod(char *rights)
 
 char	*g_rights(struct stat file_stat, char *rights)
 {
+	int	mode;
+
 	if (!(rights = malloc(sizeof(char) * 11)))
 		return (0);
-	rights[0] = *((S_ISDIR(file_stat.st_mode)) ? "d" : "-");
+	mode = (mode & S_IFMT);
+	if (S_ISREG(mode))
+		rights[0] = '-';
+	else if (S_ISDIR(mode))
+		rights[0] ='d';
+	else if (S_ISLNK(mode))
+		rights[0] = 'l';
+	else if (S_ISBLK(mode))
+		rights[0] ='b';
+	else if (S_ISCHR(mode))
+		rights[0] = 'c';
+	else if (S_ISSOCK(mode))
+		rights[0] = 's';
+	else if (S_ISFIFO(mode))
+		rights[0] = 'p';
+	else
+		rights[0] = '-';
 	rights[1] = *((file_stat.st_mode & S_IRUSR) ? "r" : "-");
 	rights[2] = *((file_stat.st_mode & S_IWUSR) ? "w" : "-");
 	rights[3] = *((file_stat.st_mode & S_IXUSR) ? "x" : "-");
