@@ -55,7 +55,7 @@ void	g_link(char *path, int n)
 		free(tmp);
 	}
 	closedir(dir);
-	(n == 0 ? printf("total %i\n", i) : printf("total %i\n", i));
+	(n == 0 ? printf("%s: total %i\n", path, i) : printf("%s: total %i\n", path, i));
 }
 
 int		ft_chmod(char *rights)
@@ -82,24 +82,21 @@ int		ft_chmod(char *rights)
 
 char	*g_rights(struct stat file_stat, char *rights)
 {
-	int	mode;
-
 	if (!(rights = malloc(sizeof(char) * 11)))
 		return (0);
-	mode = (mode & S_IFMT);
-	if (S_ISREG(mode))
+	if (S_ISREG(file_stat.st_mode))
 		rights[0] = '-';
-	else if (S_ISDIR(mode))
+	else if (S_ISDIR(file_stat.st_mode))
 		rights[0] ='d';
-	else if (S_ISLNK(mode))
+	else if (S_ISLNK(file_stat.st_mode))
 		rights[0] = 'l';
-	else if (S_ISBLK(mode))
+	else if (S_ISBLK(file_stat.st_mode))
 		rights[0] ='b';
-	else if (S_ISCHR(mode))
+	else if (S_ISCHR(file_stat.st_mode))
 		rights[0] = 'c';
-	else if (S_ISSOCK(mode))
+	else if (S_ISSOCK(file_stat.st_mode))
 		rights[0] = 's';
-	else if (S_ISFIFO(mode))
+	else if (S_ISFIFO(file_stat.st_mode))
 		rights[0] = 'p';
 	else
 		rights[0] = '-';

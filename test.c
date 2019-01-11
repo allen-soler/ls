@@ -7,8 +7,7 @@ void	ft_print(t_lst *root)
 	current = root->child;
 	while (current)
 	{
-		printf("%s\n", current->content);
-		sort_ascii(current->child);
+		printf("%s %i\n", current->content, current->data);
 		while (current->child)
 		{
 			printf("%s ", current->child->content);

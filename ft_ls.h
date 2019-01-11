@@ -32,7 +32,7 @@
 # define C_RESET   "\x1b[0m"
 
 struct dirent	*sd;
-struct stat	f_stat;
+struct stat		f_stat;
 struct passwd	*pwd;
 struct group	*grp;
 
@@ -44,22 +44,27 @@ typedef struct		s_lst
 	struct s_lst	*child;
 }					t_lst;
 
-void	ft_print(t_lst *root);
-void	lst_add(t_lst **head, t_lst *new);
-void	ft_print(t_lst *root);
+		/*LIST-INFO*/
 t_lst	*new_node(char *name, int data);
 t_lst	*add_sibling(t_lst *n, char *name, int data);
 t_lst	*add_child(t_lst *n, char *name, int data);
 void	lst_add(t_lst **head, t_lst *new);
+void	ft_print(t_lst *root);
 
-char	*check_path(char *path, char *o_path, int n);
-void	g_link(char *path, int n);
-int		ft_chmod(char *rights);
-char	*g_rights(struct stat file_stat, char *rights);
+		/*SORT*/
 void	swap(t_lst *p1, t_lst *p2);
 void	sort_ascii(t_lst *head);
+void	sort_int(t_lst *head);
+
+		/*PATH-INFO*/
+char	*check_path(char *path, char *o_path, int n);
+void	add_path(char *path, t_lst *head, int n, int i);
 
 void	ft_ls_l(char *name, struct stat fstat);
+
 char	*get_time(struct stat date);
+char	*g_rights(struct stat file_stat, char *rights);
+int		ft_chmod(char *rights);
+void	g_link(char *path, int n);
 
 #endif
