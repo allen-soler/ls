@@ -6,7 +6,7 @@
 #    By: jallen <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 16:45:54 by jallen            #+#    #+#              #
-#    Updated: 2018/11/17 19:46:53 by jallen           ###   ########.fr        #
+#    Updated: 2019/01/11 15:46:36 by jallen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC =	ft_strlen.c ft_strdup.c ft_strlcat.c ft_strcpy.c ft_strncpy.c		\
 		ft_memccpy.c ft_memmove.c ft_memchr.c ft_memcmp.c ft_putchar_fd.c	\
 		ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_striter.c			\
 		ft_striteri.c ft_strmap.c ft_strmapi.c ft_lstnew.c ft_lstdelone.c	\
-		ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_itoa_base.c		\
+		ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c 					\
 		ft_display.c ft_abs.c
 
 OBJ =	ft_strlen.o ft_strdup.o ft_strlcat.o ft_strcpy.o ft_strncpy.o 		\
@@ -37,7 +37,7 @@ OBJ =	ft_strlen.o ft_strdup.o ft_strlcat.o ft_strcpy.o ft_strncpy.o 		\
 		ft_memccpy.o ft_memmove.o ft_memchr.o ft_memcmp.o ft_putchar_fd.o	\
 		ft_putstr_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_striter.o			\
 		ft_striteri.o ft_strmap.o ft_strmapi.o ft_lstnew.o ft_lstdelone.o	\
-		ft_lstdel.o ft_lstadd.o ft_lstiter.o ft_lstmap.o ft_itoa_base.o		\
+		ft_lstdel.o ft_lstadd.o ft_lstiter.o ft_lstmap.o 					\
 		ft_display.o ft_abs.o
 
 CC = gcc

@@ -6,18 +6,19 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 14:15:40 by jallen            #+#    #+#             */
-/*   Updated: 2018/12/12 23:25:52 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/11 17:10:42 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
-char	*check_path(char *path, char *o_path, int n)
+char		*check_path(char *path, char *o_path, int n)
 {
 	int		i;
 	char	*r;
 
 	i = ft_strlen(path);
+	r = NULL;
 	if (path[i - 1] != '/' && n == 0)
 	{
 		r = ft_strjoin(path, "/");
@@ -33,7 +34,7 @@ char	*check_path(char *path, char *o_path, int n)
 	return (path);
 }
 
-void	g_link(char *path, int n)
+void		g_link(char *path, int n)
 {
 	DIR				*dir;
 	int				i;
@@ -55,10 +56,11 @@ void	g_link(char *path, int n)
 		free(tmp);
 	}
 	closedir(dir);
-	(n == 0 ? printf("%s: total %i\n", path, i) : printf("%s: total %i\n", path, i));
+	(n == 0 ? printf("%s: total %i\n", path, i) :
+	printf("%s: total %i\n", path, i));
 }
 
-int		ft_chmod(char *rights)
+int			ft_chmod(char *rights)
 {
 	int	i;
 	int	n_mod;
@@ -80,35 +82,40 @@ int		ft_chmod(char *rights)
 	return (n_mod);
 }
 
-char	*g_rights(struct stat file_stat, char *rights)
+static void	file_type(char *rights, struct stat fstat)
 {
-	if (!(rights = malloc(sizeof(char) * 11)))
-		return (0);
-	if (S_ISREG(file_stat.st_mode))
+	if (S_ISREG(fstat.st_mode))
 		rights[0] = '-';
-	else if (S_ISDIR(file_stat.st_mode))
-		rights[0] ='d';
-	else if (S_ISLNK(file_stat.st_mode))
+	else if (S_ISDIR(fstat.st_mode))
+		rights[0] = 'd';
+	else if (S_ISLNK(fstat.st_mode))
 		rights[0] = 'l';
-	else if (S_ISBLK(file_stat.st_mode))
-		rights[0] ='b';
-	else if (S_ISCHR(file_stat.st_mode))
+	else if (S_ISBLK(fstat.st_mode))
+		rights[0] = 'b';
+	else if (S_ISCHR(fstat.st_mode))
 		rights[0] = 'c';
-	else if (S_ISSOCK(file_stat.st_mode))
+	else if (S_ISSOCK(fstat.st_mode))
 		rights[0] = 's';
-	else if (S_ISFIFO(file_stat.st_mode))
+	else if (S_ISFIFO(fstat.st_mode))
 		rights[0] = 'p';
 	else
 		rights[0] = '-';
-	rights[1] = *((file_stat.st_mode & S_IRUSR) ? "r" : "-");
-	rights[2] = *((file_stat.st_mode & S_IWUSR) ? "w" : "-");
-	rights[3] = *((file_stat.st_mode & S_IXUSR) ? "x" : "-");
-	rights[4] = *((file_stat.st_mode & S_IRGRP) ? "r" : "-");
-	rights[5] = *((file_stat.st_mode & S_IWGRP) ? "w" : "-");
-	rights[6] = *((file_stat.st_mode & S_IXGRP) ? "x" : "-");
-	rights[7] = *((file_stat.st_mode & S_IROTH) ? "r" : "-");
-	rights[8] = *((file_stat.st_mode & S_IWOTH) ? "w" : "-");
-	rights[9] = *((file_stat.st_mode & S_IXOTH) ? "x" : "-");
+}
+
+char		*g_rights(struct stat fstat, char *rights)
+{
+	if (!(rights = malloc(sizeof(char) * 11)))
+		return (0);
+	file_type(rights, fstat);
+	rights[1] = *((fstat.st_mode & S_IRUSR) ? "r" : "-");
+	rights[2] = *((fstat.st_mode & S_IWUSR) ? "w" : "-");
+	rights[3] = *((fstat.st_mode & S_IXUSR) ? "x" : "-");
+	rights[4] = *((fstat.st_mode & S_IRGRP) ? "r" : "-");
+	rights[5] = *((fstat.st_mode & S_IWGRP) ? "w" : "-");
+	rights[6] = *((fstat.st_mode & S_IXGRP) ? "x" : "-");
+	rights[7] = *((fstat.st_mode & S_IROTH) ? "r" : "-");
+	rights[8] = *((fstat.st_mode & S_IWOTH) ? "w" : "-");
+	rights[9] = *((fstat.st_mode & S_IXOTH) ? "x" : "-");
 	rights[10] = '\0';
 	return (rights);
 }

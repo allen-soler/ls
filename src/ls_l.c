@@ -6,11 +6,11 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2018/12/16 22:37:02 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/11 21:15:42 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 char	*get_time(struct stat date)
 {
@@ -50,16 +50,16 @@ void	ft_ls_l(char *name, struct stat fstat)
 	rights = g_rights(fstat, rights);
 	time = get_time(fstat);
 	grp = getgrgid(fstat.st_gid);
-	printf("%s%4i ", rights, (int)fstat.st_nlink);
+	ft_printf("%s%4i ", rights, (int)fstat.st_nlink);
 	if ((pwd = getpwuid(fstat.st_uid)) != NULL)
-		printf("%s  %s", pwd->pw_name, grp->gr_name);
-	printf("  %5lli %s", fstat.st_size, time);
+		ft_printf("%s  %s", pwd->pw_name, grp->gr_name);
+	ft_printf("  %5lli %s", fstat.st_size, time);
 	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-')
-		printf(C_RED" %s\n"C_RESET, name);
+		ft_printf(" {r}%s\n{R}", name);
 	else if (rights[0] == 'd')
-		printf(C_BLUE" %s\n"C_RESET, name);
+		ft_printf(C_BLUE" %s\n"C_RESET, name);
 	else
-		printf(" %-5s\n", name);
+		ft_printf(" %-5s\n", name);
 	free(time);
 	free(rights);
 }
@@ -68,10 +68,11 @@ int		main(int ac, char **av)
 {
 	t_lst	*root;
 	t_lst	*current;
+	(void)ac;
 
 	current = NULL;
 	root = new_node(NULL, 0);
 	add_path(check_path(av[1], "", 0), root, 0, 0);
 	current = root->child;
-	ft_print_ls(current);
+	ft_print(current);
 }
