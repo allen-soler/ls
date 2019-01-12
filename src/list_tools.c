@@ -6,17 +6,15 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/11 20:58:43 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/12 16:57:26 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	ft_print(t_lst *root)
+void	ft_print(t_lst *current)
 {
-	t_lst	*current;
 
-	current = root;
 	while (current)
 	{
 		ft_printf("first->child = %s %i\n", current->content, current->data);
@@ -84,22 +82,26 @@ void	lst_add(t_lst **head, t_lst *new)
 	else
 		*head = new;
 }
-/*
 void	test(t_lst *head)
 {
 	t_lst	*current = NULL;
 	t_lst	*current1 = NULL;
 	t_lst	*current2 = NULL;
 	t_lst	*current3 = NULL;
-
-	current = add_child(head, "first current", 1);
-	current1 = add_child(current, "second current", 2);
+	t_lst	*current4 = NULL;
+	current = add_child(head, "head current", 1);
+	current1 = add_child(current, "first", 1);
 	for (int i = 0; i < 5; i++)
 		lst_add(&current1->child, new_node("current second", i));
-	current2 = add_child(head, "first current1", 1);
-	current3 = add_child(current2, "second current1", 2);
+	
+	current2 = add_child(current, "second", 2);
 	for (int i = 0; i < 5; i++)
-		lst_add(&current3->child, new_node("current1 third", i));
+		lst_add(&current2->child, new_node("current1 third", i));
+	
+	current3 = add_child(head, "head current", 1);
+	current4 = add_child(current3, "first", 1);
+	for (int i = 0; i < 5; i++)
+		lst_add(&current4->child, new_node("current second", i));
 
 }
 
@@ -107,9 +109,23 @@ int	main(int ac, char **av)
 {
 	t_lst	*head = NULL;
 	t_lst	*current = NULL;
-	head = new_node("root", 0);
+	head = new_node(NULL, 0);
 	test(head);
 	current = head->child;
-	ft_print(current);
+	while (current)
+	{
+		ft_printf("%s\n", current->content);
+		while (current->child)
+		{
+			ft_printf("%s\n", current->child->content);
+			while (current->child->child)
+			{
+				ft_printf("%s\n", current->child->child->content);
+				current->child->child = current->child->child->next;
+			}
+			ft_printf("\n");
+			current->child = current->child->next;
+		}
+		current = current->next;
+	}
 }
-*/
