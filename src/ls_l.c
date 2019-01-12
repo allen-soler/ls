@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/12 15:47:05 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/12 19:02:12 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,20 @@ int		main(int ac, char **av)
 	root = new_node(NULL, 0);
 	add_path(check_path(av[1], "", 0), root, 0, 0);
 	current = root->child;
-	ft_print_ls(current);
+	while (current)
+	{
+		while (current->child)
+		{
+			ft_printf("%s\n", current->child->content);
+			while (current->child->child)
+			{
+				ft_printf("%s ", current->child->child->content);
+				current->child->child = current->child->child->next;
+			}
+			ft_printf("\n\n");
+			current->child = current->child->next;
+		}
+		current = current->next;
+	}
+	//ft_print_ls(current);
 }
