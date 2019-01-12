@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/11 21:15:42 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/12 15:47:05 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@ void	ft_ls_l(char *name, struct stat fstat)
 	rights = g_rights(fstat, rights);
 	time = get_time(fstat);
 	grp = getgrgid(fstat.st_gid);
-	ft_printf("%s%4i ", rights, (int)fstat.st_nlink);
+	printf("%s%4i ", rights, (int)fstat.st_nlink);
 	if ((pwd = getpwuid(fstat.st_uid)) != NULL)
-		ft_printf("%s  %s", pwd->pw_name, grp->gr_name);
-	ft_printf("  %5lli %s", fstat.st_size, time);
+		printf("%s  %s", pwd->pw_name, grp->gr_name);
+	printf("  %5lli %s", fstat.st_size, time);
 	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-')
-		ft_printf(" {r}%s\n{R}", name);
+		printf(C_RED" %s\n"C_RESET, name);
 	else if (rights[0] == 'd')
-		ft_printf(C_BLUE" %s\n"C_RESET, name);
+		printf(C_BLUE" %s\n"C_RESET, name);
 	else
-		ft_printf(" %-5s\n", name);
+		printf(" %-5s\n", name);
 	free(time);
 	free(rights);
 }
@@ -74,5 +74,5 @@ int		main(int ac, char **av)
 	root = new_node(NULL, 0);
 	add_path(check_path(av[1], "", 0), root, 0, 0);
 	current = root->child;
-	ft_print(current);
+	ft_print_ls(current);
 }
