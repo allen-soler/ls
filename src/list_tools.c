@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/12 19:02:46 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/12 19:06:27 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,50 +62,21 @@ void	lst_add(t_lst **head, t_lst *new)
 		*head = new;
 }
 
-/*void	test(t_lst *head)
+void	reverse(t_lst **head_ref)
 {
-	t_lst	*current = NULL;
-	t_lst	*current1 = NULL;
-	t_lst	*current2 = NULL;
-	t_lst	*current3 = NULL;
-	t_lst	*current4 = NULL;
-	current = add_child(head, "first head current", 1);
-	current1 = add_child(current, "first", 1);
-	for (int i = 0; i < 5; i++)
-		lst_add(&current1->child, new_node("current second", i));
-	
-	current2 = add_child(current, "second", 2);
-	for (int i = 0; i < 5; i++)
-		lst_add(&current2->child, new_node("current1 third", i));
-	
-	current = add_child(head, "second head current", 1);
-	current4 = add_child(current, "first in second head", 1);
-	for (int i = 0; i < 5; i++)
-		lst_add(&current4->child, new_node("current second", i));
+	t_lst	*current;
+	t_lst	*next;
+	t_lst	*prev;
 
-}
-
-int	main(int ac, char **av)
-{
-	t_lst	*head = NULL;
-	t_lst	*current = NULL;
-	head = new_node(NULL, 0);
-	test(head);
-	current = head->child;
-	while (current)
+	current = *head_ref;
+	next = NULL;
+	prev = NULL;
+	while (current != NULL)
 	{
-		ft_printf("%s\n", current->content);
-		while (current->child)
-		{
-			ft_printf("%s\n", current->child->content);
-			while (current->child->child)
-			{
-				ft_printf("%s\n", current->child->child->content);
-				current->child->child = current->child->child->next;
-			}
-			ft_printf("\n");
-			current->child = current->child->next;
-		}
-		current = current->next;
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
-}*/
+	*head_ref = prev;
+}

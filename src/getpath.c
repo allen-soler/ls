@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/12 19:02:22 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/12 19:10:22 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	sorting(t_lst *current, t_lst *d_path)
 		sort_ascii(current);
 	if (d_path != NULL)
 		sort_ascii(d_path);
-	//sort_ascii(n_path);
 }
 
 static void	recursive_path(t_lst *head, char *path, int n)
@@ -30,7 +29,7 @@ static void	recursive_path(t_lst *head, char *path, int n)
 	d_path = NULL;
 	if (!(d = opendir(path)))
 		return ;
-	current = add_child (head, path, 0);	
+	current = add_child(head, path, 0);
 	while ((sd = readdir(d)) != NULL)
 	{
 		if (sd->d_name[0] != '.' && n == 0)
@@ -49,12 +48,12 @@ static void	recursive_path(t_lst *head, char *path, int n)
 	closedir(d);
 }
 
-static void first_path(t_lst *head, t_lst **d_path, int i, int n, char *path)
+static void	first_path(t_lst *head, t_lst **d_path, int i, int n, char *path)
 {
 	DIR				*d;
-	t_lst			*root;	
+	t_lst			*root;
 	t_lst			*current;
-	
+
 	if (!(d = opendir(path)))
 		return ;
 	root = add_child(head, NULL, 0);
@@ -73,7 +72,7 @@ static void first_path(t_lst *head, t_lst **d_path, int i, int n, char *path)
 	closedir(d);
 }
 
-void	add_path(char *path, t_lst *head, int n, int i)
+void		add_path(char *path, t_lst *head, int n, int i)
 {
 	t_lst			*root;
 	t_lst			*d_path;
@@ -83,35 +82,7 @@ void	add_path(char *path, t_lst *head, int n, int i)
 	while (d_path && i == 0)
 	{
 		root = add_child(head, NULL, 0);
-		//ft_printf("%s\n", d_path->content);
 		recursive_path(root, d_path->content, n);
 		d_path = d_path->next;
 	}
 }
-/*
-   void	add_path(char *path, t_lst *head, int n, int i)
-   {
-   t_lst			*d_path;
-   t_lst			*current;
-   DIR				*d;
-   struct dirent	*sd;
-
-   d_path = NULL;
-   if (!(d = opendir(path)))
-   return;
-   current = add_child(head, path, i);
-   while ((sd = readdir(d)) != NULL)
-   {
-   if (sd->d_name[0] != '.')
-   lst_add(&current->child, new_node(sd->d_name, 0));	
-   if (sd->d_type == DT_DIR && sd->d_name[0] != '.' && n == 0)
-   lst_add(&d_path, new_node(check_path(sd->d_name, path, 0), i++));
-   }
-   sort_ascii(d_path);
-   while (d_path)
-   {
-   add_path(d_path->content, head, 0, ++i);
-   d_path = d_path->next;
-   }
-   closedir(d);
-   }*/
