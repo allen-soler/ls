@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:28:10 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/13 17:49:06 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/13 23:22:42 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,23 @@ void	reverse_child(t_lst **head_ref)
 		current = next;
 	}
 	*head_ref = prev;
+}
+
+void	ft_sortav(int ac, char **av, int start)
+{
+	char	*tmp;
+	int		i;
+
+	i = start;
+	while (i < ac - 1)
+	{
+		if (ft_strcmp(av[i], av[i + 1]) > 0)
+		{
+			tmp = av[i];
+			av[i] = av[i + 1];
+			av[i + 1] = tmp;
+			i = start;
+		}
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/13 16:46:09 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/13 22:52:17 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ struct group	*grp;
 typedef struct		s_lst
 {
 	char			*content;
-	int				data;
+	long			data;
 	struct s_lst	*next;
 	struct s_lst	*child;
 }					t_lst;
@@ -58,19 +58,20 @@ void				swap_list(t_lst *p1, t_lst *p2);
 void				sort_ascii(t_lst *head);
 void				sort_int(t_lst *head);
 void				reverse_child(t_lst **head_ref);
+void				ft_sortav(int ac, char **av, int start);
 /*
 **path
 */
-char				*check_path(char *path, char *o_path, int n);
-void				add_path(char *path, t_lst *head, int n, int i);
+char				*check_p(char *path, char *o_path, int n);
+void				add_path(char *path, t_lst *head, char *flags);
 /*
 **printing
 */
-void				ft_ls_l(char *name, struct stat fstat);
+void				ft_normal_ls(t_lst *current);
+void				ft_print_ls(t_lst *current);
 /*
 **stats
 */
-char				*get_time(struct stat date);
 int					ft_chmod(char *rights);
 void				g_link(char *path, int n);
 char				*g_rights(struct stat fstat, char *rights);

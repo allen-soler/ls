@@ -6,13 +6,13 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 14:15:40 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/11 17:10:42 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/13 22:52:52 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-char		*check_path(char *path, char *o_path, int n)
+char		*check_p(char *path, char *o_path, int n)
 {
 	int		i;
 	char	*r;
@@ -38,8 +38,6 @@ void		g_link(char *path, int n)
 {
 	DIR				*dir;
 	int				i;
-	struct dirent	*sd;
-	struct stat		fstat;
 	char			*tmp;
 
 	i = 0;
@@ -48,11 +46,11 @@ void		g_link(char *path, int n)
 	while ((sd = readdir(dir)) != NULL)
 	{
 		tmp = ft_strjoin(path, sd->d_name);
-		stat(tmp, &fstat);
+		stat(tmp, &f_stat);
 		if (sd->d_name[0] != '.' && n == 0)
-			i = i + fstat.st_blocks;
+			i = i + f_stat.st_blocks;
 		if (n > 0)
-			i = i + fstat.st_blocks;
+			i = i + f_stat.st_blocks;
 		free(tmp);
 	}
 	closedir(dir);
