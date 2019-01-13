@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:28:10 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/13 16:45:25 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/13 17:49:06 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sort_int(t_lst *head)
 		traverse = start->next;
 		while (traverse)
 		{
-			if (min->data > traverse->data)
+			if (min->data < traverse->data)
 				min = traverse;
 			traverse = traverse->next;
 		}
