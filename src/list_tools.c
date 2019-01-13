@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/12 19:06:27 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/13 16:46:25 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,4 @@ void	lst_add(t_lst **head, t_lst *new)
 	}
 	else
 		*head = new;
-}
-
-void	reverse(t_lst **head_ref)
-{
-	t_lst	*current;
-	t_lst	*next;
-	t_lst	*prev;
-
-	current = *head_ref;
-	next = NULL;
-	prev = NULL;
-	while (current != NULL)
-	{
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
-	}
-	*head_ref = prev;
 }

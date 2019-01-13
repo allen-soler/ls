@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/11 17:07:22 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/13 16:46:09 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void				ft_print(t_lst *root);
 void				swap_list(t_lst *p1, t_lst *p2);
 void				sort_ascii(t_lst *head);
 void				sort_int(t_lst *head);
+void				reverse_child(t_lst **head_ref);
 /*
 **path
 */

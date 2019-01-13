@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/12 19:07:12 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/13 16:54:20 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,8 @@ int		main(int ac, char **av)
 	current = root->child;
 	while (current)
 	{
-		while (current->child)
-		{
-			ft_printf("%s\n", current->child->content);
-			while (current->child->child)
-			{
-				ft_printf("%s ", current->child->child->content);
-				current->child->child = current->child->child->next;
-			}
-			ft_printf("\n\n");
-			current->child = current->child->next;
-		}
+		ft_printf("%s\n", current->content);
 		current = current->next;
 	}
-	//ft_print_ls(current);
+	//	ft_print_ls(current);
 }
