@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/15 16:13:43 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/15 17:19:04 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void	add_path(char *path, t_lst *head, char *flags)
 	head = NULL;
 	i = 0;
 	if (!(d = opendir(path)))
+	{
 		return;
+	}
 	while ((sd = readdir(d)) != NULL)
 	{
 		time = 0;
