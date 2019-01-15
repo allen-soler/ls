@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/14 09:48:04 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/15 14:55:22 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void				add_path(char *path, t_lst *head, char *flags);
 **printing
 */
 void				ft_normal_ls(t_lst *current);
-void				ft_print_ls(t_lst *current, int i);
+//void				ft_print_ls(t_lst *current, int i);
+void				ft_print_ls(t_lst *head, char *path,  int i);
 /*
 **stats
 */

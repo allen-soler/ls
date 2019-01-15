@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/14 10:19:37 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/15 14:51:10 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,26 @@ void		ft_normal_ls(t_lst *current)
 	ft_printf("\n");
 }
 
-void		ft_print_ls(t_lst *current, int i)
+void		ft_print_ls(t_lst *head, char *path,  int i)
+{
+	char	*tmp;
+
+	tmp = check_p(path, "", 1);
+	if (i == 0)
+		ft_printf("total :%i\n", i);
+	else
+		ft_printf("%s: \ntotal : %i\n", tmp, i);
+   free(tmp);	
+	while (head)
+	{
+		tmp = ft_strjoin(path, head->content);
+		lstat(tmp, &f_stat);
+		ft_ls_l(head->content, f_stat);
+		head = head->next;
+		free(tmp);
+	}
+}
+/*void		ft_print_ls(t_lst *current, int i)
 {
 	char	*tmp;
 
@@ -77,4 +96,4 @@ void		ft_print_ls(t_lst *current, int i)
 		ft_putchar('\n');
 		ft_print_ls(current, 1);
 	}
-}
+}*/

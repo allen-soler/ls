@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/13 16:46:25 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:02:00 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_lst	*new_node(char *name, int data)
 {
 	t_lst	*new_node;
 
+	new_node = NULL;
 	if (!(new_node = malloc(sizeof(t_lst))))
 		return (0);
 	if (name == NULL)

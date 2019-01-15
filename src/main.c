@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 18:30:58 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/14 21:20:07 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/15 16:04:29 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,14 @@ void static	ls_type(char **av, char *flags, int ac, int start)
 {
 	char	*tmp;
 	t_lst	*root;
-	t_lst	*current;
 
+	root = NULL;
 	if (ft_atoi(flags) == 10000 || ft_atoi(flags) == 2000 || ft_atoi(flags) == 300
 			|| ft_atoi(flags) == 40 || ft_atoi(flags) == 5)
 		return ;
-	current = NULL;
-	root = new_node(NULL, 0);
-	tmp = start == ac ?  "./" : check_p(av[start], "", 0);
+	tmp = start == ac ?  ft_strdup("./") : ft_strjoin(av[start], "/");
 	add_path(tmp, root, flags);
-	current = root->child;
-	ft_print_ls(current, 0);
+	free(tmp);
 }
 
 int			main(int ac, char **av)
@@ -85,13 +82,13 @@ int			main(int ac, char **av)
 	t_lst	*root;
 
 	start = 1;
+	root = NULL;
 	flags = ft_strdup("00000");
 	ls_options(ac, av, flags, &start);
 	if (ac <= 1)
 	{
-		root = new_node(NULL,0);
 		add_path("./", root, flags);
-		ft_print_ls(root->child, 0);
+		ft_print_ls(root, "./", 0);
 		free(flags);
 		return (0);
 	}
