@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/15 14:55:22 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/15 17:15:38 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ typedef struct		s_lst
 	struct s_lst	*next;
 	struct s_lst	*child;
 }					t_lst;
+
+/*
+**Flags
+*/
+# define L (1 << 0)
+# define A (2 << 1)
+# define R (3 << 2)
+# define RR (4 << 3)
+# define T (5 << 4)
 /*
 **Nodes
 */
@@ -68,7 +77,6 @@ void				add_path(char *path, t_lst *head, char *flags);
 **printing
 */
 void				ft_normal_ls(t_lst *current);
-//void				ft_print_ls(t_lst *current, int i);
 void				ft_print_ls(t_lst *head, char *path,  int i);
 /*
 **stats
