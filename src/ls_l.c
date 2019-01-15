@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/13 22:48:44 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/14 10:19:37 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ static void	ft_ls_l(char *name, struct stat fstat)
 	rights = g_rights(fstat, rights);
 	time = get_time(fstat);
 	grp = getgrgid(fstat.st_gid);
-	printf("%s%4i ", rights, (int)fstat.st_nlink);
+	ft_printf("%s%4i ", rights, (int)fstat.st_nlink);
 	if ((pwd = getpwuid(fstat.st_uid)) != NULL)
-		printf("%s  %s", pwd->pw_name, grp->gr_name);
-	printf("  %5lld %s", fstat.st_size, time);
+		ft_printf("%s  %s", pwd->pw_name, grp->gr_name);
+	ft_printf("  %5lld %s", fstat.st_size, time);
 	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-')
-		printf(C_RED" %s\n"C_RESET, name);
+		ft_printf(" {r}%s\n{R}", name);
 	else if (rights[0] == 'd')
-		printf(C_BLUE" %s\n"C_RESET, name);
+		ft_printf(" {c}%s\n{R}", name);
 	else
-		printf(" %-5s\n", name);
+		ft_printf(" %-5s\n", name);
 	free(time);
 	free(rights);
 }
@@ -53,11 +53,16 @@ void		ft_normal_ls(t_lst *current)
 	ft_printf("\n");
 }
 
-void		ft_print_ls(t_lst *current)
+void		ft_print_ls(t_lst *current, int i)
 {
 	char	*tmp;
 
-	g_link(current->content, 0);
+	tmp = check_p(current->content, "", 1);
+	if (i == 0)
+		ft_printf("total :%i\n", current->data);
+	else
+		ft_printf("%s: \ntotal : %i\n", tmp, current->data);
+   free(tmp);	
 	while (current->child)
 	{
 		tmp = ft_strjoin(current->content, current->child->content);
@@ -70,6 +75,6 @@ void		ft_print_ls(t_lst *current)
 	if (current != NULL)
 	{
 		ft_putchar('\n');
-		ft_print_ls(current);
+		ft_print_ls(current, 1);
 	}
 }

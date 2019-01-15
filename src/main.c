@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 18:30:58 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/13 22:57:36 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/14 21:20:07 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ void static	ls_type(char **av, char *flags, int ac, int start)
 	t_lst	*root;
 	t_lst	*current;
 
-	(void)ac;
-	if (ft_atoi(flags) < 10)
+	if (ft_atoi(flags) == 10000 || ft_atoi(flags) == 2000 || ft_atoi(flags) == 300
+			|| ft_atoi(flags) == 40 || ft_atoi(flags) == 5)
 		return ;
 	current = NULL;
 	root = new_node(NULL, 0);
 	tmp = start == ac ?  "./" : check_p(av[start], "", 0);
 	add_path(tmp, root, flags);
 	current = root->child;
-	ft_print_ls(current);
+	ft_print_ls(current, 0);
 }
 
 int			main(int ac, char **av)
@@ -86,17 +86,17 @@ int			main(int ac, char **av)
 
 	start = 1;
 	flags = ft_strdup("00000");
+	ls_options(ac, av, flags, &start);
 	if (ac <= 1)
 	{
 		root = new_node(NULL,0);
 		add_path("./", root, flags);
-		ft_print_ls(root->child);
+		ft_print_ls(root->child, 0);
+		free(flags);
+		return (0);
 	}
 	if (ac >= 2)
 	{
-		ls_options(ac, av, flags, &start);
-		if (ft_atoi(flags) == 0)
-			return (0);
 		ft_sortav(ac, av, start);
 		ls_type(av, flags, ac, start);
 		free(flags);

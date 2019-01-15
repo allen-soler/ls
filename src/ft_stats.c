@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 14:15:40 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/13 22:52:52 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/14 09:45:01 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,6 @@ char		*check_p(char *path, char *o_path, int n)
 		return (r);
 	}
 	return (path);
-}
-
-void		g_link(char *path, int n)
-{
-	DIR				*dir;
-	int				i;
-	char			*tmp;
-
-	i = 0;
-	if ((dir = opendir(path)) == NULL)
-		exit(1);
-	while ((sd = readdir(dir)) != NULL)
-	{
-		tmp = ft_strjoin(path, sd->d_name);
-		stat(tmp, &f_stat);
-		if (sd->d_name[0] != '.' && n == 0)
-			i = i + f_stat.st_blocks;
-		if (n > 0)
-			i = i + f_stat.st_blocks;
-		free(tmp);
-	}
-	closedir(dir);
-	(n == 0 ? printf("%s: total %i\n", path, i) :
-	printf("%s: total %i\n", path, i));
 }
 
 int			ft_chmod(char *rights)
