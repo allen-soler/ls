@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 18:30:58 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/15 17:15:36 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/17 19:47:45 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,20 @@ static void	valid_av(int ac, char **av, f_fl *flags, int *i)
 	int	ok;
 
 	ok = 1;
-	while (*i < ac && ok == 1)
+	while (*i < ac && ft_strlen(av[*i]) >= 2 && av[*i][0] == '-')
 	{
 		j = 1;
-		if (av[*i][0] == '-' && ft_strlen(av[*i]) >= 2)
-			while (av[*i][j])
-			{
-				ok = 1;
-				if (av[*i][j] != 'a' && av[*i][j] != 'r' && av[*i][j] != 'R' &&
-						av[*i][j] != 'l' && av[*i][j] != 't')
-					ok = 0;
-				if (ok == 0)
-					return ;
-				j++;
-			}
-		*flags = ls_options(av[*i], *flags); 
+		while (av[*i][j])
+		{
+			ok = 1;
+			if (av[*i][j] != 'a' && av[*i][j] != 'r' && av[*i][j] != 'R'
+					&& av[*i][j] != 'l' && av[*i][j] != 't')
+				ok = 0;
+			j++;
+		}
+		*flags = ls_options(av[*i], *flags);
+		if (ok == 0)
+			return ;	   
 		*i = *i + 1; 
 	}
 }
@@ -62,27 +61,36 @@ static void	valid_av(int ac, char **av, f_fl *flags, int *i)
 void static	ls_type(char **av, f_fl flags, int ac, int start)
 {
 	char	*tmp;
-	t_lst	*root;
 
-	root = NULL;
-	tmp = ft_strjoin(av[start], "/");
-	add_path(tmp, root, flags);
-	free(tmp);
+	if (ac == start)
+	{
+		tmp = ft_strdup("./");
+		add_path(tmp, flags);
+		free(tmp);
+	}
+	else if (start < ac)
+	{
+		ft_sortav(ac, av, start);
+		while (start < ac)
+		{
+			tmp = ft_strjoin(av[start], "/");
+			add_path(tmp, flags);
+			free(tmp);
+			start++;
+		}
+	}
 }
 
 int			main(int ac, char **av)
 {
 	int		start;
-	t_lst	*root;
 	f_fl	flag;
 
 	start = 1;
-	root = NULL;
 	valid_av(ac, av, &flag, &start);
 	if (ac <= 1)
 	{
-		add_path("./", root, flag);
-		ft_print_ls(root, "./", 0);
+		add_path("./", flag);
 		return (0);
 	}
 	if (ac >= 2)

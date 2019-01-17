@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/15 16:02:00 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/17 19:54:43 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,6 @@ t_lst	*new_node(char *name, int data)
 	return (new_node);
 }
 
-t_lst	*add_sibling(t_lst *n, char *name, int data)
-{
-	if (n == NULL)
-		return (NULL);
-	while (n->next)
-		n = n->next;
-	return (n->next = new_node(name, data));
-}
-
-t_lst	*add_child(t_lst *n, char *name, int data)
-{
-	if (n == NULL)
-		return (NULL);
-	if (n->child)
-		return (add_sibling(n->child, name, data));
-	else
-		return (n->child = new_node(name, data));
-}
-
 void	lst_add(t_lst **head, t_lst *new)
 {
 	t_lst	*tmp;
@@ -61,4 +42,17 @@ void	lst_add(t_lst **head, t_lst *new)
 	}
 	else
 		*head = new;
+}
+
+void	free_list(t_lst *head)
+{
+	t_lst	*tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->content);
+		free(tmp);
+	}
 }

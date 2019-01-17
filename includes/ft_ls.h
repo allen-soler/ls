@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/15 17:15:38 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/17 19:45:30 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ typedef short		f_fl;
 **Nodes
 */
 t_lst				*new_node(char *name, int data);
-t_lst				*add_sibling(t_lst *n, char *name, int data);
-t_lst				*add_child(t_lst *n, char *name, int data);
 void				lst_add(t_lst **head, t_lst *new);
 void				ft_print(t_lst *root);
+void				free_list(t_lst *head);
 /*
 **sort
 */
@@ -74,7 +73,7 @@ void				ft_sortav(int ac, char **av, int start);
 **path
 */
 char				*check_p(char *path, char *o_path, int n);
-void				add_path(char *path, t_lst *head, f_fl flag);
+void				add_path(char *path, f_fl flag);
 /*
 **printing
 */

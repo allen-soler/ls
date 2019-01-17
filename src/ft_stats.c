@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 14:15:40 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/14 09:45:01 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/17 18:40:08 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char		*check_p(char *path, char *o_path, int n)
 	if (path[i - 1] == '/' && n == 1)
 	{
 		r = ft_strdup(path);
-		r[i - 1] = '\0';
+		r[i - 1] = ':';
 		return (r);
 	}
 	return (path);
