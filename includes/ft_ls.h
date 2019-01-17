@@ -44,6 +44,15 @@ typedef struct		s_lst
 	struct s_lst	*child;
 }					t_lst;
 
+typedef struct		f_fl
+{
+	char	l;
+	char	a;
+	char	Re;
+	char	r;
+	char	t;
+}			t_fl;
+
 /*
 **Flags
 */
