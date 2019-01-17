@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 18:30:58 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/17 19:47:45 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/17 20:38:49 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void static	ls_type(char **av, f_fl flags, int ac, int start)
 	}
 	else if (start < ac)
 	{
-		ft_sortav(ac, av, start);
 		while (start < ac)
 		{
 			tmp = ft_strjoin(av[start], "/");
@@ -94,9 +93,6 @@ int			main(int ac, char **av)
 		return (0);
 	}
 	if (ac >= 2)
-	{
-		ft_sortav(ac, av, start);
 		ls_type(av, flag, ac, start);
-	}
 	return (0);
 }

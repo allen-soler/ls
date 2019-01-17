@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/17 19:54:16 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/17 20:35:13 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,12 @@ static void	ft_ls_l(char *name, struct stat fstat)
 	ft_printf("%s%4i ", rights, (int)fstat.st_nlink);
 	if ((pwd = getpwuid(fstat.st_uid)) != NULL)
 		ft_printf("%s  %s", pwd->pw_name, grp->gr_name);
-	ft_printf("  %5lld %s", fstat.st_size, time);
+	if (S_ISCHR(fstat.st_mode) || S_ISBLK(fstat.st_mode))
+		ft_printf("  %5d, %d ", (int32_t)(((fstat.st_rdev) >> 24) & 0xff),
+				(int32_t)((fstat.st_rdev) & 0xffffff));
+	else
+		ft_printf("  %5lld ", fstat.st_size);
+	ft_printf("%s", time);
 	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-')
 		ft_printf(" {r}%s\n{R}", name);
 	else if (rights[0] == 'd')
