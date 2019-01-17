@@ -1,66 +1,59 @@
 #include "../includes/ft_ls.h"
 
-static int	valid_av(char *av)
+static f_fl	ls_options(char *av, f_fl flags)
 {
-	int	i;
+	int		i;
+
+	i = 0;
+	while (av[i])
+	{
+		if (av[i] == 'l')
+			flags |= L;
+		if (av[i] == 'a')
+			flags |= A;
+		if (av[i] == 'R')
+			flags |= R;
+		if (av[i] == 't')
+			flags |= T;
+		if (av[i] == 'r')
+			flags |= RR;
+		i++;
+	}
+	return (flags);
+}
+
+static void	valid_av(int ac, char **av, f_fl *flags, int *i)
+{
+	int	j;
 	int	ok;
 
-	i = 1;
-	ok = 0;
-	if (av[0] == '-')
-		while (av[i])
-		{
-			ok = 1;
-			if (av[i] != 'a' && av[i] != 'r' && av[i] != 'R' &&
-					av[i] != 'l' && av[i] != 't')
-				ok = 0;
-			if (ok == 0)
-				return (ok);
-			i++;
-		}
-	return (ok);
-}
-
-static t_flag	ls_options(int ac, char **av, int *i)
-{
-	int		j;
-	t_fl		flags;
-
-	while (*i < ac)
+	ok = 1;
+	while (*i < ac && ok == 1)
 	{
 		j = 1;
-		if (valid_av(av[*i]) == 1)
+		if (av[*i][0] == '-')
 			while (av[*i][j])
 			{
-				if (av[*i][j] == 'l')
-					flags.l |= L;
-				if (av[*i][j] == 'a')
-					flags.a |= A;
-				if (av[*i][j] == 'R')
-					flags.Re |= R;
-				if (av[*i][j] == 't')
-					flags.t |= T;
-				if (av[*i][j] == 'r')
-					flags.r |= RR;
+				ok = 1;
+				if (av[*i][j] != 'a' && av[*i][j] != 'r' && av[*i][j] != 'R' &&
+						av[*i][j] != 'l' && av[*i][j] != 't')
+					ok = 0;
+				if (ok == 0)
+					return ;
 				j++;
 			}
-		else
-			break ;
-		*i = *i + 1;
+		*flags = ls_options(av[*i], *flags); 
+		*i = *i + 1; 
 	}
 }
-
-
+/*
 int	main(int ac, char **av)
 {
-	int i = atoi(av[1]);
-	char r = 0;
-
-	//ft_test(av[1]);
-	if (i == 0)
-		r &= ~L;
-	else
-		r |= L;
-	printf("%i\n", r);
+	int i = 1;
+	int	j;
+	f_fl	flag;
+	
+	valid_av(ac, av, &flag, &i);
+	printf("l = %i\na = %i\nR = %i\nr = %i\nt = %i\n",flag & L, flag & A, flag & R, flag & RR, flag & T );
 	return (0);
-}
+}*/

@@ -12,91 +12,83 @@
 
 #include "../includes/ft_ls.h"
 
-static int	valid_av(char *av)
+static f_fl	ls_options(char *av, f_fl flags)
 {
-	int	i;
-	int	ok;
+	int		i;
 
-	i = 1;
-	ok = 0;
-	if (av[0] == '-')
-		while (av[i])
-		{
-			ok = 1;
-			if (av[i] != 'a' && av[i] != 'r' && av[i] != 'R' &&
-					av[i] != 'l' && av[i] != 't')
-				ok = 0;
-			if (ok == 0)
-				return (ok);
-			i++;
-		}
-	return (ok);
+	i = 0;
+	while (av[i])
+	{
+		if (av[i] == 'l')
+			flags |= L;
+		if (av[i] == 'a')
+			flags |= A;
+		if (av[i] == 'R')
+			flags |= R;
+		if (av[i] == 't')
+			flags |= T;
+		if (av[i] == 'r')
+			flags |= RR;
+		i++;
+	}
+	return (flags);
 }
 
-static void	ls_options(int ac, char **av, char *flags, int *i)
+static void	valid_av(int ac, char **av, f_fl *flags, int *i)
 {
-	int		j;
+	int	j;
+	int	ok;
 
-	while (*i < ac)
+	ok = 1;
+	while (*i < ac && ok == 1)
 	{
 		j = 1;
-		if (valid_av(av[*i]) == 1)
+		if (av[*i][0] == '-' && ft_strlen(av[*i]) >= 2)
 			while (av[*i][j])
 			{
-				if (av[*i][j] == 'l')
-					flags[0] = '1';
-				if (av[*i][j] == 'a')
-					flags[1] = '2';
-				if (av[*i][j] == 'R')
-					flags[2] = '3';
-				if (av[*i][j] == 't')
-					flags[3] = '4';
-				if (av[*i][j] == 'r')
-					flags[4] = '5';
+				ok = 1;
+				if (av[*i][j] != 'a' && av[*i][j] != 'r' && av[*i][j] != 'R' &&
+						av[*i][j] != 'l' && av[*i][j] != 't')
+					ok = 0;
+				if (ok == 0)
+					return ;
 				j++;
 			}
-		else
-			break ;
-		*i = *i + 1;
+		*flags = ls_options(av[*i], *flags); 
+		*i = *i + 1; 
 	}
 }
 
-void static	ls_type(char **av, char *flags, int ac, int start)
+void static	ls_type(char **av, f_fl flags, int ac, int start)
 {
 	char	*tmp;
 	t_lst	*root;
 
 	root = NULL;
-	if (ft_atoi(flags) == 10000 || ft_atoi(flags) == 2000 || ft_atoi(flags) == 300
-			|| ft_atoi(flags) == 40 || ft_atoi(flags) == 5)
-		return ;
-	tmp = start == ac ?  ft_strdup("./") : ft_strjoin(av[start], "/");
+	tmp = ft_strjoin(av[start], "/");
 	add_path(tmp, root, flags);
 	free(tmp);
 }
 
 int			main(int ac, char **av)
 {
-	char	*flags;
 	int		start;
 	t_lst	*root;
+	f_fl	flag;
 
 	start = 1;
 	root = NULL;
-	flags = ft_strdup("00000");
-	ls_options(ac, av, flags, &start);
+	valid_av(ac, av, &flag, &start);
 	if (ac <= 1)
 	{
-		add_path("./", root, flags);
+		add_path("./", root, flag);
 		ft_print_ls(root, "./", 0);
-		free(flags);
 		return (0);
 	}
 	if (ac >= 2)
 	{
 		ft_sortav(ac, av, start);
-		ls_type(av, flags, ac, start);
-		free(flags);
+		ls_type(av, flag, ac, start);
 	}
 	return (0);
 }

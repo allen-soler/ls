@@ -39,7 +39,7 @@ static void	ft_ls_l(char *name, struct stat fstat)
 		ft_printf(" {c}%s\n{R}", name);
 	else
 		ft_printf(" %-5s ", name);
-	ft_printf("%i\n", f_stat.st_rdev);
+	//ft_printf("%i\n", f_stat.st_rdev);
 	free(time);
 	free(rights);
 }

@@ -44,23 +44,16 @@ typedef struct		s_lst
 	struct s_lst	*child;
 }					t_lst;
 
-typedef struct		f_fl
-{
-	char	l;
-	char	a;
-	char	Re;
-	char	r;
-	char	t;
-}			t_fl;
+typedef short		f_fl;
 
 /*
 **Flags
 */
 # define L (1 << 0)
-# define A (2 << 1)
-# define R (3 << 2)
-# define RR (4 << 3)
-# define T (5 << 4)
+# define A (1 << 1)
+# define R (1 << 2)
+# define RR (1 << 3)
+# define T (1 << 4)
 /*
 **Nodes
 */
@@ -81,7 +74,7 @@ void				ft_sortav(int ac, char **av, int start);
 **path
 */
 char				*check_p(char *path, char *o_path, int n);
-void				add_path(char *path, t_lst *head, char *flags);
+void				add_path(char *path, t_lst *head, f_fl flag);
 /*
 **printing
 */

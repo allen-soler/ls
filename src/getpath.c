@@ -24,29 +24,29 @@ void	free_list(t_lst *head)
 		free(tmp);
 	}
 }
-static void	sorting(t_lst **current, t_lst **d_path, char *flags)
+static void	sorting(t_lst **current, t_lst **d_path, f_fl flag)
 {
 	if (current != NULL)
 	{
-		if (flags[3] == '0')
+		if ((flag & T) == 0)
 			sort_ascii(*current);
-		if (flags[3] == '4')
+		if ((flag & T) == 4)
 			sort_int(*current);
-		if (flags[4] == '5')
+		if ((flag & RR)  == 5)
 			reverse_child(current);
 	}
 	if (d_path)
 	{
-		if (flags[3] == '0')
+		if ((flag & T) == 0)
 			sort_ascii(*d_path);
-		if (flags[3] == '4')
+		if ((flag & T) == 4)
 			sort_int(*d_path);
-		if (flags[4] == '5')
+		if ((flag & RR) == 5)
 			reverse_child(d_path);
 	}
 }
 
-void	add_path(char *path, t_lst *head, char *flags)
+void	add_path(char *path, t_lst *head, f_fl flag)
 {
 	t_lst			*d_path;
 	DIR				*d;
@@ -59,10 +59,11 @@ void	add_path(char *path, t_lst *head, char *flags)
 	i = 0;
 	if (!(d = opendir(path)))
 	{
+		ft_printf("test");
 		path = check_p(path, "", 1);
 		ft_printf("ls: %s: %s\n", path, strerror(errno));
 		free(path);
-		return;
+		return ;
 	}
 	while ((sd = readdir(d)) != NULL)
 	{
@@ -73,24 +74,24 @@ void	add_path(char *path, t_lst *head, char *flags)
 			time = f_stat.st_mtime;
 		if (sd->d_name[0] != '.')
 			i = i + f_stat.st_blocks;
-		if (sd->d_name[0] != '.' && flags[1] == '0')
+		if (sd->d_name[0] != '.' && (flag & A) == 0)
 			lst_add(&head, new_node(sd->d_name, (long)time));	
-		if (sd->d_type == DT_DIR && sd->d_name[0] != '.' && flags[1] == '0' && flags[2] == '3')
+		if (sd->d_type == DT_DIR && sd->d_name[0] != '.' && (flag & A) == 0 && (flag & R) != 0)
 			lst_add(&d_path, new_node(check_p(sd->d_name, path, 0), (long)time));
-		if (sd->d_name[0] && flags[1] == '2')
+		if (sd->d_name[0] && (flag & A) != 0)
 			lst_add(&head, new_node(sd->d_name, (long)time));	
 		if (sd->d_type == DT_DIR && ft_strcmp(sd->d_name,".")  != 0 && 
-				ft_strcmp(sd->d_name, "..") != 0 && flags[1] == '2' && flags[2] == '3')
+				ft_strcmp(sd->d_name, "..") != 0 && (flag & A) != 0 && (flag & R) != 0)
 			lst_add(&d_path, new_node(check_p(sd->d_name, path, 0), (long)time));
 		free(tmp);
 	}
-	sorting(&head, &d_path, flags);
+	sorting(&head, &d_path, flag);
 	ft_print_ls(head, path, i);
 	free_list(head);
 	while (d_path)
 	{
 		ft_putchar('\n');
-		add_path(d_path->content, head, flags);
+		add_path(d_path->content, head, flag);
 		free(d_path->content);
 		d_path = d_path->next;
 	}
