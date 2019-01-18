@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 15:03:23 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 17:44:30 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,14 @@ void		add_path(t_lst *d_path, char *path, f_fl flag, int i)
 
 	d_path = NULL;
 	tmp = check_p(path, "", 1);
+	if (i > 0)
+		ft_putendl(tmp);
 	if (!(d = opendir(path)))
 	{
 		ft_fprintf(2, "ls: %s %s\n", tmp, strerror(errno));
+		free(tmp);
 		return ;
 	}
-	if (i > 0)
-		ft_putendl(tmp);
 	free(tmp);
 	adding_list(d, path, &d_path, flag);
 	while (d_path)

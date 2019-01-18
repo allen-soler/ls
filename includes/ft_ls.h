@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 15:41:04 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 18:45:01 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <errno.h>
 # define C_RED     "\x1b[31m"
 # define C_GREEN   "\x1b[32m"
-# define C_YELLOW  "\x1b[33m"
+# define C_YELLOW  "\x1b[43m"
 # define C_BLUE    "\x1b[96m"
 # define C_MAGENTA "\x1b[35m"
 # define C_CYAN    "\x1b[36m"

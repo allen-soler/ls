@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 16:04:00 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 17:08:13 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	valid_av(int ac, char **av, f_fl *flags, int *i)
 	int	j;
 	int	ok;
 
-	ok = 1;
 	while (*i < ac && ft_strlen(av[*i]) >= 2 && av[*i][0] == '-')
 	{
 		j = 1;
@@ -54,7 +53,8 @@ static void	valid_av(int ac, char **av, f_fl *flags, int *i)
 				ok = 0;
 				if (ok == 0)
 				{
-					ft_fprintf(2,"ls : illegaloption -- %c\nusage : ls [-aGlRrt] [file ...]\n", av[*i][j]);
+					ft_fprintf(2, "ls : illegaloption -- %c\
+							\nusage : ls [-aGlRrt] [file ...]\n", av[*i][j]);
 					exit(1);
 				}
 			}

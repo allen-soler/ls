@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 16:03:41 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 18:47:09 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,27 @@ static char	*get_time(struct stat date)
 	return (f_time);
 }
 
-static void	ft_ls_l(char *name, struct stat fstat, f_fl flag)
+static void	ls_colors(char *name, char *buf, f_fl flag, char *rights)
 {
-	char			*rights;
+	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && flag & G)
+		ft_printf("{r}%s{R}", name);
+	else if (rights[0] == 'd' && flag & G)
+		ft_printf(" {c}%s{R}", name);
+	else if (rights[0] == 'l' && flag & G)
+		ft_printf(C_MAGENTA" %s"C_RESET, name);
+	else if (rights[0] == 'c' && flag & G)
+		ft_printf(C_YELLOW"{b}%s{R}"C_RESET, name);
+	else
+		ft_printf("%s", name);
+	if (rights[0] == 'l')
+		ft_printf(" -> %s", buf);
+	ft_putchar('\n');
+}
+
+static void	ft_ls_l(char *name, struct stat fstat, f_fl flag, char *buf)
+{
 	char			*time;
+	char			*rights;
 
 	rights = 0;
 	rights = g_rights(fstat, rights);
@@ -37,13 +54,8 @@ static void	ft_ls_l(char *name, struct stat fstat, f_fl flag)
 				(int32_t)((fstat.st_rdev) & 0xffffff));
 	else
 		ft_printf("  %5lld ", fstat.st_size);
-	ft_printf("%s", time);
-	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && flag & G)
-		ft_printf(" {r}%s\n{R}", name);
-	else if (rights[0] == 'd' && flag & G)
-		ft_printf(" {c}%s\n{R}", name);
-	else
-		ft_printf(" %-5s\n", name);
+	ft_printf("%s ", time);
+	ls_colors(name, buf, flag, rights);
 	free(time);
 	free(rights);
 }
@@ -60,19 +72,21 @@ void		ft_normal_ls(t_lst *current, char *path, f_fl flag)
 		lstat(tmp, &f_stat);
 		rights = g_rights(f_stat, rights);
 		if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && flag & G)
-			ft_printf(" {r}%s{R}", current->content);
+			ft_printf("{r}%s{R} ", current->content);
 		else if (rights[0] == 'd' && flag & G)
-			ft_printf(" {c}%s{R}", current->content);
+			ft_printf("{c}%s{R} ", current->content);
 		else
 			ft_printf("%s ", current->content);
 		current = current->next;
 	}
 	ft_putchar('\n');
+	free(rights);
 }
 
 void		ft_print_ls(t_lst *head, char *path, int i, f_fl flag)
 {
 	char	*tmp;
+	char	buf[1000];
 
 	if (flag & L)
 	{
@@ -81,7 +95,8 @@ void		ft_print_ls(t_lst *head, char *path, int i, f_fl flag)
 		{
 			tmp = ft_strjoin(path, head->content);
 			lstat(tmp, &f_stat);
-			ft_ls_l(head->content, f_stat, flag);
+			readlink(tmp, buf, 1000);
+			ft_ls_l(head->content, f_stat, flag, buf);
 			head = head->next;
 			free(tmp);
 		}
