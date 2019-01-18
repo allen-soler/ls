@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/13 18:30:58 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/17 20:38:49 by jallen           ###   ########.fr       */
+/*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
+/*   Updated: 2019/01/18 15:29:13 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,58 @@ static void	valid_av(int ac, char **av, f_fl *flags, int *i)
 	}
 }
 
+void static multi_file(char **av, f_fl flags, int ac, int start)
+{
+	char	*tmp;
+	t_lst	*d_path;
+
+	d_path = NULL;
+	while (start < ac)
+	{
+		tmp = ft_strjoin(av[start], "/");
+		if (ac >= 4)
+		{	
+			add_path(d_path, tmp, flags, 1);
+			if (start + 1 != ac)
+				ft_putchar('\n');
+		}
+		else
+			add_path(d_path, tmp, flags, 0);
+		free_list(d_path);
+		free(tmp);
+		start++;
+	}
+}
+
 void static	ls_type(char **av, f_fl flags, int ac, int start)
 {
 	char	*tmp;
+	t_lst	*d_path;
 
+	d_path = NULL;
+	tmp = NULL;
 	if (ac == start)
 	{
 		tmp = ft_strdup("./");
-		add_path(tmp, flags);
+		add_path(d_path, tmp, flags, 0);
 		free(tmp);
 	}
 	else if (start < ac)
-	{
-		while (start < ac)
-		{
-			tmp = ft_strjoin(av[start], "/");
-			add_path(tmp, flags);
-			free(tmp);
-			start++;
-		}
-	}
+		multi_file(av, flags, ac, start);
 }
 
 int			main(int ac, char **av)
 {
 	int		start;
 	f_fl	flag;
+	t_lst	*d_path;
 
+	d_path = NULL;
 	start = 1;
 	valid_av(ac, av, &flag, &start);
 	if (ac <= 1)
 	{
-		add_path("./", flag);
+		add_path(d_path, "./", flag, 0);
 		return (0);
 	}
 	if (ac >= 2)

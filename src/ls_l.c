@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/17 20:35:13 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 15:19:03 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,44 @@ static void	ft_ls_l(char *name, struct stat fstat)
 	free(rights);
 }
 
-void		ft_normal_ls(t_lst *current)
+void		ft_normal_ls(t_lst *current, char *path)
 {
+	char	*rights;
+	char	*tmp;
+
+	rights = NULL;
 	while (current)
 	{
-		ft_printf("%s ", current->child);
+		tmp = ft_strjoin(path, current->content);
+		lstat(tmp, &f_stat);
+		rights = g_rights(f_stat, rights);
+		if (ft_chmod(rights) / 100 == 7 && rights[0] == '-')
+			ft_printf(" {r}%s{R}", current->content);
+		else if (rights[0] == 'd')
+			ft_printf(" {c}%s{R}", current->content);
+		else
+			ft_printf("%s ", current->content);
 		current = current->next;
 	}
-	ft_printf("\n");
+	ft_putchar('\n');
 }
 
-void		ft_print_ls(t_lst *head, char *path, int i)
+void		ft_print_ls(t_lst *head, char *path, int i, f_fl flag)
 {
 	char	*tmp;
 
-	tmp = check_p(path, "", 1);
-	if (i == 0)
-		ft_printf("total :%i\n", i);
-	else
-		ft_printf("%s: \ntotal %i\n", tmp, i);
-	free(tmp);
-	while (head)
+	if (flag & L)
 	{
-		tmp = ft_strjoin(path, head->content);
-		lstat(tmp, &f_stat);
-		ft_ls_l(head->content, f_stat);
-		head = head->next;
-		free(tmp);
+		ft_printf("total : %i\n", i);
+		while (head)
+		{
+			tmp = ft_strjoin(path, head->content);
+			lstat(tmp, &f_stat);
+			ft_ls_l(head->content, f_stat);
+			head = head->next;
+			free(tmp);
+		}
 	}
+	else
+		ft_normal_ls(head, path);
 }

@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/17 19:45:30 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 15:10:38 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ void				ft_sortav(int ac, char **av, int start);
 **path
 */
 char				*check_p(char *path, char *o_path, int n);
-void				add_path(char *path, f_fl flag);
+void				add_path(t_lst *d_path, char *path, f_fl flag, int i);
 /*
 **printing
 */
-void				ft_normal_ls(t_lst *current);
-void				ft_print_ls(t_lst *head, char *path,  int i);
+void				ft_normal_ls(t_lst *current, char *path);
+void				ft_print_ls(t_lst *head, char *path,  int i, f_fl flag);
 /*
 **stats
 */
