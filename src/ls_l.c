@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 15:19:03 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 16:03:41 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*get_time(struct stat date)
 	return (f_time);
 }
 
-static void	ft_ls_l(char *name, struct stat fstat)
+static void	ft_ls_l(char *name, struct stat fstat, f_fl flag)
 {
 	char			*rights;
 	char			*time;
@@ -38,9 +38,9 @@ static void	ft_ls_l(char *name, struct stat fstat)
 	else
 		ft_printf("  %5lld ", fstat.st_size);
 	ft_printf("%s", time);
-	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-')
+	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && flag & G)
 		ft_printf(" {r}%s\n{R}", name);
-	else if (rights[0] == 'd')
+	else if (rights[0] == 'd' && flag & G)
 		ft_printf(" {c}%s\n{R}", name);
 	else
 		ft_printf(" %-5s\n", name);
@@ -48,7 +48,7 @@ static void	ft_ls_l(char *name, struct stat fstat)
 	free(rights);
 }
 
-void		ft_normal_ls(t_lst *current, char *path)
+void		ft_normal_ls(t_lst *current, char *path, f_fl flag)
 {
 	char	*rights;
 	char	*tmp;
@@ -59,9 +59,9 @@ void		ft_normal_ls(t_lst *current, char *path)
 		tmp = ft_strjoin(path, current->content);
 		lstat(tmp, &f_stat);
 		rights = g_rights(f_stat, rights);
-		if (ft_chmod(rights) / 100 == 7 && rights[0] == '-')
+		if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && flag & G)
 			ft_printf(" {r}%s{R}", current->content);
-		else if (rights[0] == 'd')
+		else if (rights[0] == 'd' && flag & G)
 			ft_printf(" {c}%s{R}", current->content);
 		else
 			ft_printf("%s ", current->content);
@@ -81,11 +81,11 @@ void		ft_print_ls(t_lst *head, char *path, int i, f_fl flag)
 		{
 			tmp = ft_strjoin(path, head->content);
 			lstat(tmp, &f_stat);
-			ft_ls_l(head->content, f_stat);
+			ft_ls_l(head->content, f_stat, flag);
 			head = head->next;
 			free(tmp);
 		}
 	}
 	else
-		ft_normal_ls(head, path);
+		ft_normal_ls(head, path, flag);
 }

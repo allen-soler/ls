@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 15:10:38 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 15:41:04 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef short		f_fl;
 # define R (1 << 2)
 # define RR (1 << 3)
 # define T (1 << 4)
+# define G (1 << 5)
 /*
 **Nodes
 */
@@ -77,7 +78,7 @@ void				add_path(t_lst *d_path, char *path, f_fl flag, int i);
 /*
 **printing
 */
-void				ft_normal_ls(t_lst *current, char *path);
+void				ft_normal_ls(t_lst *current, char *path, f_fl flag);
 void				ft_print_ls(t_lst *head, char *path,  int i, f_fl flag);
 /*
 **stats

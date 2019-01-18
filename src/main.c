@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 15:35:35 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/18 16:04:00 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ f_fl		ls_options(char *av, f_fl flags)
 			flags |= T;
 		if (av[i] == 'r')
 			flags |= RR;
+		if (av[i] == 'G')
+			flags |= G;
 		i++;
 	}
 	return (flags);
@@ -47,13 +49,18 @@ static void	valid_av(int ac, char **av, f_fl *flags, int *i)
 		{
 			ok = 1;
 			if (av[*i][j] != 'a' && av[*i][j] != 'r' && av[*i][j] != 'R'
-					&& av[*i][j] != 'l' && av[*i][j] != 't')
+					&& av[*i][j] != 'l' && av[*i][j] != 't' && av[*i][j] != 'G')
+			{
 				ok = 0;
+				if (ok == 0)
+				{
+					ft_fprintf(2,"ls : illegaloption -- %c\nusage : ls [-aGlRrt] [file ...]\n", av[*i][j]);
+					exit(1);
+				}
+			}
 			j++;
 		}
 		*flags = ls_options(av[*i], *flags);
-		if (ok == 0)
-			return ;
 		*i = *i + 1;
 	}
 }
@@ -106,7 +113,6 @@ int			main(int ac, char **av)
 
 	d_path = NULL;
 	start = 1;
-	flag = NULL;
 	valid_av(ac, av, &flag, &start);
 	if (ac == 1)
 	{
