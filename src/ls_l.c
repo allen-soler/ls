@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 18:47:09 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 15:45:07 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static char	*get_time(struct stat date)
 	return (f_time);
 }
 
-static void	ls_colors(char *name, char *buf, f_fl flag, char *rights)
+static void	ls_colors(char *name, char *buf, char *rights)
 {
 	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && flag & G)
 		ft_printf("{r}%s{R}", name);
 	else if (rights[0] == 'd' && flag & G)
-		ft_printf(" {c}%s{R}", name);
+		ft_printf("{c}%s{R}", name);
 	else if (rights[0] == 'l' && flag & G)
-		ft_printf(C_MAGENTA" %s"C_RESET, name);
+		ft_printf(C_MAGENTA"%s"C_RESET, name);
 	else if (rights[0] == 'c' && flag & G)
 		ft_printf(C_YELLOW"{b}%s{R}"C_RESET, name);
 	else
@@ -37,30 +37,33 @@ static void	ls_colors(char *name, char *buf, f_fl flag, char *rights)
 	ft_putchar('\n');
 }
 
-static void	ft_ls_l(char *name, struct stat fstat, f_fl flag, char *buf)
+static void	ft_ls_l(char *name, char *buf)
 {
 	char			*time;
 	char			*rights;
 
 	rights = 0;
-	rights = g_rights(fstat, rights);
-	time = get_time(fstat);
-	grp = getgrgid(fstat.st_gid);
-	ft_printf("%s%4i ", rights, (int)fstat.st_nlink);
-	if ((pwd = getpwuid(fstat.st_uid)) != NULL)
+	rights = g_rights(f_stat, rights);
+	time = get_time(f_stat);
+	grp = getgrgid(f_stat.st_gid);
+	ft_printf("%s%4i ", rights, (int)f_stat.st_nlink);
+	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
 		ft_printf("%s  %s", pwd->pw_name, grp->gr_name);
-	if (S_ISCHR(fstat.st_mode) || S_ISBLK(fstat.st_mode))
-		ft_printf("  %5d, %d ", (int32_t)(((fstat.st_rdev) >> 24) & 0xff),
-				(int32_t)((fstat.st_rdev) & 0xffffff));
+	if (S_ISCHR(f_stat.st_mode) || S_ISBLK(f_stat.st_mode))
+		ft_printf("  %5d, %d ", (int32_t)(((f_stat.st_rdev) >> 24) & 0xff),
+				(int32_t)((f_stat.st_rdev) & 0xffffff));
 	else
-		ft_printf("  %5lld ", fstat.st_size);
+	{
+		ft_putnchar(32, space.one, f_stat.st_size);
+		ft_printf("  %d ", f_stat.st_size);
+	}
 	ft_printf("%s ", time);
-	ls_colors(name, buf, flag, rights);
+	ls_colors(name, buf, rights);
 	free(time);
 	free(rights);
 }
 
-void		ft_normal_ls(t_lst *current, char *path, f_fl flag)
+void		ft_normal_ls(t_lst *current, char *path)
 {
 	char	*rights;
 	char	*tmp;
@@ -83,7 +86,7 @@ void		ft_normal_ls(t_lst *current, char *path, f_fl flag)
 	free(rights);
 }
 
-void		ft_print_ls(t_lst *head, char *path, int i, f_fl flag)
+void		ft_print_ls(t_lst *head, char *path, int i)
 {
 	char	*tmp;
 	char	buf[1000];
@@ -96,11 +99,11 @@ void		ft_print_ls(t_lst *head, char *path, int i, f_fl flag)
 			tmp = ft_strjoin(path, head->content);
 			lstat(tmp, &f_stat);
 			readlink(tmp, buf, 1000);
-			ft_ls_l(head->content, f_stat, flag, buf);
+			ft_ls_l(head->content, buf);
 			head = head->next;
 			free(tmp);
 		}
 	}
 	else
-		ft_normal_ls(head, path, flag);
+		ft_normal_ls(head, path);
 }

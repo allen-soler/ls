@@ -6,13 +6,13 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 17:08:13 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 13:52:13 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-f_fl		ls_options(char *av, f_fl flags)
+void		ls_options(char *av)
 {
 	int		i;
 
@@ -20,23 +20,22 @@ f_fl		ls_options(char *av, f_fl flags)
 	while (av[i])
 	{
 		if (av[i] == 'l')
-			flags |= L;
+			flag |= L;
 		if (av[i] == 'a')
-			flags |= A;
+			flag |= A;
 		if (av[i] == 'R')
-			flags |= R;
+			flag |= R;
 		if (av[i] == 't')
-			flags |= T;
+			flag |= T;
 		if (av[i] == 'r')
-			flags |= RR;
+			flag |= RR;
 		if (av[i] == 'G')
-			flags |= G;
+			flag |= G;
 		i++;
 	}
-	return (flags);
 }
 
-static void	valid_av(int ac, char **av, f_fl *flags, int *i)
+static void	valid_av(int ac, char **av, int *i)
 {
 	int	j;
 	int	ok;
@@ -60,12 +59,12 @@ static void	valid_av(int ac, char **av, f_fl *flags, int *i)
 			}
 			j++;
 		}
-		*flags = ls_options(av[*i], *flags);
+		ls_options(av[*i]);
 		*i = *i + 1;
 	}
 }
 
-static void	multi_file(char **av, f_fl flags, int ac, int start)
+static void	multi_file(char **av, int ac, int start)
 {
 	char	*tmp;
 	t_lst	*d_path;
@@ -76,19 +75,19 @@ static void	multi_file(char **av, f_fl flags, int ac, int start)
 		tmp = ft_strjoin(av[start], "/");
 		if (ac >= 4)
 		{
-			add_path(d_path, tmp, flags, 1);
+			add_path(d_path, tmp, 1);
 			if (start + 1 != ac)
 				ft_putchar('\n');
 		}
 		else
-			add_path(d_path, tmp, flags, 0);
+			add_path(d_path, tmp, 0);
 		free_list(d_path);
 		free(tmp);
 		start++;
 	}
 }
 
-static void	ls_type(char **av, f_fl flags, int ac, int start)
+static void	ls_type(char **av, int ac, int start)
 {
 	char	*tmp;
 	t_lst	*d_path;
@@ -98,28 +97,27 @@ static void	ls_type(char **av, f_fl flags, int ac, int start)
 	if (ac == start)
 	{
 		tmp = ft_strdup("./");
-		add_path(d_path, tmp, flags, 0);
+		add_path(d_path, tmp, 0);
 		free(tmp);
 	}
 	else if (start < ac)
-		multi_file(av, flags, ac, start);
+		multi_file(av, ac, start);
 }
 
 int			main(int ac, char **av)
 {
 	int		start;
-	f_fl	flag;
 	t_lst	*d_path;
 
 	d_path = NULL;
 	start = 1;
-	valid_av(ac, av, &flag, &start);
+	valid_av(ac, av, &start);
 	if (ac == 1)
 	{
-		add_path(d_path, "./", flag, 0);
+		add_path(d_path, "./", 0);
 		return (0);
 	}
 	if (ac >= 2)
-		ls_type(av, flag, ac, start);
+		ls_type(av, ac, start);
 	return (0);
 }

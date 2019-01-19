@@ -6,13 +6,13 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 17:44:30 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 15:46:31 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-static void	sorting(t_lst **current, t_lst **d_path, f_fl flag)
+static void	sorting(t_lst **current, t_lst **d_path)
 {
 	if (current != NULL)
 	{
@@ -34,64 +34,67 @@ static void	sorting(t_lst **current, t_lst **d_path, f_fl flag)
 	}
 }
 
-static int	adding_n(char *name, f_fl flag, int i)
+static int	adding_n(int i)
 {
 	if (i == 0)
 	{
 		if (flag & A)
 			return (1);
-		else if ((flag & A) == 0 && name[0] != '.')
+		else if ((flag & A) == 0 && sd->d_name[0] != '.')
 			return (2);
 	}
 	else if (i == 1)
 	{
-		if (flag & A && flag & R && ft_strcmp(name, ".") != 0 &&
-				ft_strcmp(name, "..") != 0)
+		if (flag & A && flag & R && ft_strcmp(sd->d_name, ".") != 0 &&
+				ft_strcmp(sd->d_name, "..") != 0)
 			return (1);
-		else if ((flag & A) == 0 && name[0] != '.' && flag & R)
+		else if ((flag & A) == 0 && sd->d_name[0] != '.' && flag & R)
 			return (2);
 	}
 	return (0);
 }
 
-static void	adding_path(t_lst **d_path, char *name, char *path, time_t time)
-{
-	char	*tmp;
-
-	tmp = check_p(name, path, 0);
-	lst_add(d_path, new_node(tmp, (long)time));
-	free(tmp);
-}
-
-static void	adding_list(DIR *d, char *path, t_lst **d_path, f_fl flag)
+static void	adding_path(t_lst **d_path, t_lst **head, char *path, int *i)
 {
 	char	*tmp;
 	time_t	time;
+
+	time = 0;
+	tmp = check_p(sd->d_name, path, 0);
+	if (f_stat.st_mode > time)
+		time = f_stat.st_mtime;
+	if (sd->d_name[0] != '.')
+		*i = *i + f_stat.st_blocks;
+	if (adding_n(0))
+		lst_add(head, new_node(sd->d_name, (long)time));
+	if (sd->d_type == DT_DIR && adding_n(1))
+		lst_add(d_path, new_node(tmp, (long)time));
+	space.one = counting_spaces(space.one, f_stat.st_size);
+	free(tmp);
+}
+
+static void	adding_list(DIR *d, char *path, t_lst **d_path)
+{
+	char	*tmp;
 	t_lst	*head;
 	int		i;
 
+	i = 0;
 	head = NULL;
+	space.one = 0;
 	while ((sd = readdir(d)) != NULL)
 	{
-		time = 0;
 		tmp = ft_strjoin(path, sd->d_name);
 		lstat(tmp, &f_stat);
-		if (f_stat.st_mode > time)
-			time = f_stat.st_mtime;
-		if (sd->d_name[0] != '.')
-			i = i + f_stat.st_blocks;
-		if (adding_n(sd->d_name, flag, 0))
-			lst_add(&head, new_node(sd->d_name, (long)time));
-		if (sd->d_type == DT_DIR && adding_n(sd->d_name, flag, 1))
-			adding_path(d_path, sd->d_name, path, time);
+		adding_path(d_path, &head, path, &i);
 		free(tmp);
 	}
-	sorting(&head, d_path, flag);
-	ft_print_ls(head, path, i, flag);
+	sorting(&head, d_path);
+	ft_print_ls(head, path, i);
 	free_list(head);
 }
 
-void		add_path(t_lst *d_path, char *path, f_fl flag, int i)
+void		add_path(t_lst *d_path, char *path, int i)
 {
 	char	*tmp;
 	DIR		*d;
@@ -107,11 +110,11 @@ void		add_path(t_lst *d_path, char *path, f_fl flag, int i)
 		return ;
 	}
 	free(tmp);
-	adding_list(d, path, &d_path, flag);
+	adding_list(d, path, &d_path);
 	while (d_path)
 	{
 		ft_putchar('\n');
-		add_path(d_path, d_path->content, flag, 1);
+		add_path(d_path, d_path->content, 1);
 		free(d_path->content);
 		free(d_path);
 		d_path = d_path->next;

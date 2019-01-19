@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 18:45:01 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 15:42:45 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@
 # define C_CYAN    "\x1b[36m"
 # define C_RESET   "\x1b[0m"
 
+/*
+**Flags
+*/
+# define L (1 << 0)
+# define A (1 << 1)
+# define R (1 << 2)
+# define RR (1 << 3)
+# define T (1 << 4)
+# define G (1 << 5)
+
 struct dirent	*sd;
 struct stat		f_stat;
 struct passwd	*pwd;
@@ -44,17 +54,15 @@ typedef struct		s_lst
 	struct s_lst	*child;
 }					t_lst;
 
-typedef short		f_fl;
+typedef struct		s_sp
+{
+	int				one;
+	int				two;
+}					t_sp;
 
-/*
-**Flags
-*/
-# define L (1 << 0)
-# define A (1 << 1)
-# define R (1 << 2)
-# define RR (1 << 3)
-# define T (1 << 4)
-# define G (1 << 5)
+typedef short		f_fl;
+f_fl	flag;
+t_sp	space;
 /*
 **Nodes
 */
@@ -74,16 +82,21 @@ void				ft_sortav(int ac, char **av, int start);
 **path
 */
 char				*check_p(char *path, char *o_path, int n);
-void				add_path(t_lst *d_path, char *path, f_fl flag, int i);
+void				add_path(t_lst *d_path, char *path, int i);
 /*
 **printing
 */
-void				ft_normal_ls(t_lst *current, char *path, f_fl flag);
-void				ft_print_ls(t_lst *head, char *path,  int i, f_fl flag);
+void				ft_normal_ls(t_lst *current, char *path);
+void				ft_print_ls(t_lst *head, char *path, int i);
 /*
 **stats
 */
 int					ft_chmod(char *rights);
 char				*g_rights(struct stat fstat, char *rights);
+/*
+** spaces + misc
+*/
+int					counting_spaces(int spaces, int max);
+void				ft_putnchar(char c, int max, int min);
 
 #endif
