@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/19 15:46:31 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 16:48:36 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,13 @@ static void	adding_path(t_lst **d_path, t_lst **head, char *path, int *i)
 	if (sd->d_name[0] != '.')
 		*i = *i + f_stat.st_blocks;
 	if (adding_n(0))
+	{
 		lst_add(head, new_node(sd->d_name, (long)time));
+		space.one = counting_spaces(space.one, f_stat.st_size);
+		space.two = counting_spaces(space.two, f_stat.st_nlink);
+	}
 	if (sd->d_type == DT_DIR && adding_n(1))
 		lst_add(d_path, new_node(tmp, (long)time));
-	space.one = counting_spaces(space.one, f_stat.st_size);
 	free(tmp);
 }
 
@@ -82,6 +85,7 @@ static void	adding_list(DIR *d, char *path, t_lst **d_path)
 	i = 0;
 	head = NULL;
 	space.one = 0;
+	space.two = 0;
 	while ((sd = readdir(d)) != NULL)
 	{
 		tmp = ft_strjoin(path, sd->d_name);

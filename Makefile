@@ -3,7 +3,7 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra
 
-NAME = ls
+NAME = ft_ls
 
 DIR_S = src
 

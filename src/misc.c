@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/19 15:42:28 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 16:48:42 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		counting_spaces(int spaces, int max)
 {
 	if (max > spaces)
 		return (max);
-	return (spaces);	
+	return (spaces);
 }
 
 void	ft_putnchar(char c, int max, int min)
@@ -41,5 +41,5 @@ void	ft_putnchar(char c, int max, int min)
 	{
 		write(1, &c, 1);
 		i--;
-	}	
+	}
 }

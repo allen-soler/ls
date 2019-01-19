@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:12:06 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/19 15:45:07 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 16:38:07 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ static void	ft_ls_l(char *name, char *buf)
 	rights = g_rights(f_stat, rights);
 	time = get_time(f_stat);
 	grp = getgrgid(f_stat.st_gid);
-	ft_printf("%s%4i ", rights, (int)f_stat.st_nlink);
+	ft_printf("%s  ", rights);
+	ft_putnchar(32, space.two, f_stat.st_nlink);
+	ft_printf("%i ",(int)f_stat.st_nlink);
 	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
 		ft_printf("%s  %s", pwd->pw_name, grp->gr_name);
 	if (S_ISCHR(f_stat.st_mode) || S_ISBLK(f_stat.st_mode))
