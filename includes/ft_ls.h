@@ -6,15 +6,14 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/19 15:42:45 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 16:30:42 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 
-# include "../src/libft/libft.h"
-# include "../src/ft_printf/includes/ft_printf.h"
+# include "../libftprintf/includes/ft_printf.h"
 # include <sys/types.h>
 # include <dirent.h>
 # include <sys/types.h>
