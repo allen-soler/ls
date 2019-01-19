@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/19 13:52:13 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/19 17:29:34 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ void		ls_options(char *av)
 	while (av[i])
 	{
 		if (av[i] == 'l')
-			flag |= L;
+			g_flag |= L;
 		if (av[i] == 'a')
-			flag |= A;
+			g_flag |= A;
 		if (av[i] == 'R')
-			flag |= R;
+			g_flag |= R;
 		if (av[i] == 't')
-			flag |= T;
+			g_flag |= T;
 		if (av[i] == 'r')
-			flag |= RR;
+			g_flag |= RR;
 		if (av[i] == 'G')
-			flag |= G;
+			g_flag |= G;
 		i++;
 	}
 }

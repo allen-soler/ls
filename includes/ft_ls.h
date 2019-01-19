@@ -59,9 +59,11 @@ typedef struct		s_sp
 	int				two;
 }					t_sp;
 
-typedef short		f_fl;
-f_fl	flag;
-t_sp	space;
+typedef short		t_fl;
+
+t_fl	g_flag;
+t_sp	g_space;
+
 /*
 **Nodes
 */
