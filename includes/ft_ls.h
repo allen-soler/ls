@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/21 16:39:20 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/21 23:30:12 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,34 +64,35 @@ typedef short		t_fl;
 t_fl	g_flag;
 t_sp	g_space;
 
-// nestor
-void	merge_sort(t_lst **h, int func);
 
 /*
-**Nodes
+**Nodes + nodes tools
 */
 t_lst				*new_node(char *name, int data);
 void				lst_add(t_lst **head, t_lst *new);
 void				ft_print(t_lst *root);
 void				free_list(t_lst *head);
+void				free_node(t_lst *head);
 /*
 **sort
 */
 void				swap_list(t_lst *p1, t_lst *p2);
-void				sort_ascii(t_lst *head);
-void				sort_int(t_lst *head);
 void				reverse_child(t_lst **head_ref);
 void				ft_sortav(int ac, char **av, int start);
+void				merge_sort(t_lst **h, int func);
+void				sorting(t_lst **current, t_lst **d_path);
 /*
 **path
 */
 char				*check_p(char *path, char *o_path, int n);
-void				add_path(t_lst *d_path, char *path, int i);
+void				add_path(char *path, int i);
 /*
 **printing
 */
 void				ft_normal_ls(t_lst *current, char *path);
 void				ft_print_ls(t_lst *head, char *path, int i);
+void				printing_files(char *file);
+void				ft_ls_l(char *name, char *buf);
 /*
 **stats
 */
@@ -102,5 +103,9 @@ char				*g_rights(struct stat fstat, char *rights);
 */
 int					counting_spaces(int spaces, int max);
 void				ft_putnchar(char c, int max, int min);
+/*
+** multi file
+*/
+void				check_args(char **a, int ac, int *start, t_lst **paths);
 
 #endif

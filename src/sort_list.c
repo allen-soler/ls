@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:28:10 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/13 23:22:42 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/21 22:57:10 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,54 +23,6 @@ void	swap_list(t_lst *p1, t_lst *p2)
 	tmp = p1->content;
 	p1->content = p2->content;
 	p2->content = tmp;
-}
-
-void	sort_int(t_lst *head)
-{
-	t_lst	*start;
-	t_lst	*traverse;
-	t_lst	*min;
-
-	start = head;
-	if (head == NULL)
-		return ;
-	while (start->next)
-	{
-		min = start;
-		traverse = start->next;
-		while (traverse)
-		{
-			if (min->data < traverse->data)
-				min = traverse;
-			traverse = traverse->next;
-		}
-		swap_list(start, min);
-		start = start->next;
-	}
-}
-
-void	sort_ascii(t_lst *head)
-{
-	t_lst	*start;
-	t_lst	*traverse;
-	t_lst	*min;
-
-	start = head;
-	if (head == NULL)
-		return ;
-	while (start->next)
-	{
-		min = start;
-		traverse = start->next;
-		while (traverse)
-		{
-			if (ft_strcmp(min->content, traverse->content) > 0)
-				min = traverse;
-			traverse = traverse->next;
-		}
-		swap_list(start, min);
-		start = start->next;
-	}
 }
 
 void	reverse_child(t_lst **head_ref)
@@ -90,6 +42,28 @@ void	reverse_child(t_lst **head_ref)
 		current = next;
 	}
 	*head_ref = prev;
+}
+
+void	sorting(t_lst **current, t_lst **d_path)
+{
+	if (current)
+	{
+		if ((g_flag & T) == 0)
+			merge_sort(current, 1);
+		if (g_flag & T)
+			merge_sort(current, 0);
+		if (g_flag & RR)
+			reverse_child(current);
+	}
+	if (d_path)
+	{
+		if ((g_flag & T) < 0)
+			merge_sort(d_path, 1);
+		if (g_flag & T)
+			merge_sort(d_path, 0);
+		if (g_flag & RR)
+			reverse_child(d_path);
+	}
 }
 
 void	ft_sortav(int ac, char **av, int start)

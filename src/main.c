@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/19 17:29:34 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/21 23:35:59 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,37 +66,39 @@ static void	valid_av(int ac, char **av, int *i)
 static void	multi_file(char **av, int ac, int start)
 {
 	char	*tmp;
-	t_lst	*d_path;
+	t_lst	*paths;
 
-	d_path = NULL;
-	while (start < ac)
+	paths = NULL;
+	tmp = NULL;
+	check_args(av, ac, &start, &paths);
+	while (paths)
 	{
-		tmp = ft_strjoin(av[start], "/");
-		if (ac >= 4)
-		{
-			add_path(d_path, tmp, 1);
-			if (start + 1 != ac)
-				ft_putchar('\n');
-		}
+		if (start > 1)
+			ft_printf("%s\n", paths->content);
+		if (paths->data != 1)
+			printing_files(paths->content);
 		else
-			add_path(d_path, tmp, 0);
-		free_list(d_path);
-		free(tmp);
-		start++;
+		{
+			tmp = check_p(paths->content, "", 0);
+			add_path(tmp, 0);
+			free(tmp);
+		}
+		if (paths->next)
+			ft_putchar('\n');
+		free_node(paths);
+		paths = paths->next;
 	}
 }
 
 static void	ls_type(char **av, int ac, int start)
 {
 	char	*tmp;
-	t_lst	*d_path;
 
-	d_path = NULL;
 	tmp = NULL;
 	if (ac == start)
 	{
 		tmp = ft_strdup("./");
-		add_path(d_path, tmp, 0);
+		add_path(tmp, 0);
 		free(tmp);
 	}
 	else if (start < ac)
@@ -106,14 +108,12 @@ static void	ls_type(char **av, int ac, int start)
 int			main(int ac, char **av)
 {
 	int		start;
-	t_lst	*d_path;
 
-	d_path = NULL;
 	start = 1;
 	valid_av(ac, av, &start);
 	if (ac == 1)
 	{
-		add_path(d_path, "./", 0);
+		add_path("./", 0);
 		return (0);
 	}
 	if (ac >= 2)

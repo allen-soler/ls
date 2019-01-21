@@ -6,33 +6,11 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/19 17:30:16 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/21 23:08:33 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-
-static void	sorting(t_lst **current, t_lst **d_path)
-{
-	if (current != NULL)
-	{
-		if ((g_flag & T) == 0)
-			sort_ascii(*current);
-		if (g_flag & T)
-			sort_int(*current);
-		if (g_flag & RR)
-			reverse_child(current);
-	}
-	if (d_path)
-	{
-		if ((g_flag & T) < 0)
-			sort_ascii(*d_path);
-		if (g_flag & T)
-			sort_int(*d_path);
-		if (g_flag & RR)
-			reverse_child(d_path);
-	}
-}
 
 static int	adding_n(int i)
 {
@@ -98,10 +76,11 @@ static void	adding_list(DIR *d, char *path, t_lst **d_path)
 	free_list(head);
 }
 
-void		add_path(t_lst *d_path, char *path, int i)
+void		add_path(char *path, int i)
 {
 	char	*tmp;
 	DIR		*d;
+	t_lst	*d_path;
 
 	d_path = NULL;
 	tmp = check_p(path, "", 1);
@@ -118,7 +97,7 @@ void		add_path(t_lst *d_path, char *path, int i)
 	while (d_path)
 	{
 		ft_putchar('\n');
-		add_path(d_path, d_path->content, 1);
+		add_path(d_path->content, 1);
 		free(d_path->content);
 		free(d_path);
 		d_path = d_path->next;
