@@ -1,27 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   merge_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalonso <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/21 16:48:42 by nalonso           #+#    #+#             */
+/*   Updated: 2019/01/21 16:49:51 by nalonso          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ls.h"
 
-/*
- * MergeSort(headRef)
- * 1) If head is NULL or there is only one element in the Linked List 
- *     then return.
- * 2) Else divide the linked list into two halves.  
- *           FrontBackSplit(head, &a, &b);
- * 3) Sort the two halves a and b.
- *     MergeSort(a);
- *     MergeSort(b);
- * 4) Merge the sorted a and b (using SortedMerge() discussed here) 
- *	   and update the head pointer using headRef.
- *	  *headRef = SortedMerge(a, b);
-*/
-
-void	split_list(t_lst *source, t_lst **front, t_lst **back)
+static void		split_list(t_lst *source, t_lst **front, t_lst **back)
 {
 	t_lst	*fast;
 	t_lst	*slow;
 
 	slow = source;
 	fast = source->next;
-	// fast advances two nodes on each iteration, thus finishing the list double the time of slow, and therefore will stop when slow it's at half the list
 	while (fast)
 	{
 		fast = fast->next;
@@ -36,7 +33,7 @@ void	split_list(t_lst *source, t_lst **front, t_lst **back)
 	slow->next = NULL;
 }
 
-t_lst	*sort_and_merge(t_lst *a, t_lst *b)
+static t_lst	*sort_and_merge(t_lst *a, t_lst *b)
 {
 	t_lst *result;
 
@@ -45,7 +42,6 @@ t_lst	*sort_and_merge(t_lst *a, t_lst *b)
 		return (b);
 	else if (!b)
 		return (a);
-
 	if (a->data <= b->data)
 	{
 		result = a;
@@ -59,7 +55,7 @@ t_lst	*sort_and_merge(t_lst *a, t_lst *b)
 	return (result);
 }
 
-t_lst *sort_and_merge_ascii(t_lst *a, t_lst *b)
+static t_lst	*sort_and_merge_ascii(t_lst *a, t_lst *b)
 {
 	t_lst *result;
 
@@ -68,7 +64,6 @@ t_lst *sort_and_merge_ascii(t_lst *a, t_lst *b)
 		return (b);
 	else if (!b)
 		return (a);
-
 	if (a->data <= b->data && ft_strcmp(a->content, b->content) >= 0)
 	{
 		result = a;
@@ -82,29 +77,22 @@ t_lst *sort_and_merge_ascii(t_lst *a, t_lst *b)
 	return (result);
 }
 
-void	merge_sort(t_lst **headRef, int func)
+void			merge_sort(t_lst **head_ref, int func)
 {
 	t_lst *head;
 	t_lst *a;
 	t_lst *b;
 
-	head = *headRef;
+	head = *head_ref;
 	if (head == NULL || head->next == NULL)
 	{
 		return ;
 	}
-
-	// split into two sublists
 	split_list(head, &a, &b);
-
-	// recursively sort the sublists
 	merge_sort(&a, func);
 	merge_sort(&b, func);
-
-	// merge the two sorted lists togheter
 	if (func == 0)
-		*headRef = sort_and_merge(a, b);
+		*head_ref = sort_and_merge(a, b);
 	else if (func == 1)
-		*headRef = sort_and_merge_ascii(a, b);
+		*head_ref = sort_and_merge_ascii(a, b);
 }
-
