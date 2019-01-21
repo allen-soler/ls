@@ -46,8 +46,7 @@ static void	valid_av(int ac, char **av, int *i)
 		while (av[*i][j])
 		{
 			ok = 1;
-			if (av[*i][j] != 'a' && av[*i][j] != 'r' && av[*i][j] != 'R'
-					&& av[*i][j] != 'l' && av[*i][j] != 't' && av[*i][j] != 'G')
+			if (!ft_strchr("arRltG", av[*i][j]))
 			{
 				ok = 0;
 				if (ok == 0)

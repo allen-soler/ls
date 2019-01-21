@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/19 16:30:42 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/21 16:39:20 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ typedef short		t_fl;
 
 t_fl	g_flag;
 t_sp	g_space;
+
+// nestor
+void	merge_sort(t_lst **h, int func);
 
 /*
 **Nodes
