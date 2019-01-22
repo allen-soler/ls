@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 19:07:51 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 20:38:57 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,13 @@ void	free_node(t_lst *head)
 {
 	free(head->content);
 	free(head);
+}
+
+void	nchar(int space, char c)
+{
+	while (space > 0)
+	{
+		write(1, &c, 1);
+		space--;
+	}
 }

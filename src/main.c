@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 19:58:28 by jallen           ###   ########.fr       */
+/*   Created: 2019/01/22 20:45:01 by jallen            #+#    #+#             */
+/*   Updated: 2019/01/22 20:46:20 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,25 @@ void		ls_options(char *av)
 {
 	int		i;
 
-	i = 0;
+	i = 1;
 	while (av[i])
 	{
-		if (av[i] == 'l')
+		if (av[i] == 'l' && ++i)
 			g_flag |= L;
-		if (av[i] == 'a')
+		else if (av[i] == 'a' && i++)
 			g_flag |= A;
-		if (av[i] == 'R')
+		else if (av[i] == 'R' && i++)
 			g_flag |= R;
-		if (av[i] == 't')
+		else if (av[i] == 't' && i++)
 			g_flag |= T;
-		if (av[i] == 'r')
+		else if (av[i] == 'r' && i++)
 			g_flag |= RR;
-		if (av[i] == 'G')
+		else if (av[i] == 'G' && i++)
 			g_flag |= G;
-		if (av[i] == 'f')
+		else if (av[i] == 'f' && i++)
 			g_flag |= F;
-		if (av[i] == '1')
+		else if (av[i] == '1' && i++)
 			g_flag |= ONE;
-		i++;
 	}
 }
 

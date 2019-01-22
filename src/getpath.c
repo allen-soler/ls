@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 20:04:03 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 21:10:30 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void		spaces(void)
 {
 	grp = getgrgid(f_stat.st_gid);
-	g_space.one = counting_spaces(g_space.one, f_stat.st_size, 0);
-	g_space.two = counting_spaces(g_space.two, f_stat.st_nlink, 0);
+	g_space.one = counting_spaces(g_space.one, (int)f_stat.st_size, 0);
+	g_space.two = counting_spaces(g_space.two, (int)f_stat.st_nlink, 0);
 	g_space.name = counting_spaces(g_space.name, ft_strlen(sd->d_name), 1);
 	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
 	{
@@ -26,6 +26,7 @@ void		spaces(void)
 				ft_strlen(grp->gr_name), 1);
 	}
 }
+
 static int	adding_n(int i)
 {
 	if (i == 0)
