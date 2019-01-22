@@ -6,7 +6,7 @@
 /*   By: nalonso <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 12:28:06 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/19 15:25:05 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/21 12:42:50 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void		handle_base(t_param *n, unsigned int base, t_printf *p)
 		i[0] = '0';
 	i[1] = '\0';
 	if ((!err) && n->ind & SHARP)
-		res = fstrjoin(ft_strdup(i), res);
+		res = fstrjoin(ft_strdup_safe(i), res);
 	if (((n->ind & PRECISION && !(n->ind & ZERO) && (n->precision != 0)) || \
 		(err && !(n->ind & SHARP)) || (n->ind & SHARP && err \
 		&& n->precision == 0 && (n->ind & ZERO || n->ind & NONE))))
@@ -70,7 +70,7 @@ void		handle_base(t_param *n, unsigned int base, t_printf *p)
 	res = add_ind(res, n);
 	if (err && base == 8 && n->precision == 0 && n->ind & SHARP \
 			&& !(n->precision == 0 && err && n->ind & CLEAR))
-		res = fstrjoin(ft_strdup(i), res);
+		res = fstrjoin(ft_strdup_safe(i), res);
 	buffer(p, res, ft_strlen(res));
 	free(res);
 }
@@ -93,11 +93,11 @@ void		handle_hexa(t_param *n, unsigned int base, t_printf *p)
 		i[1] = 'x';
 	i[2] = '\0';
 	if (!(n->ind & PRECISION) && !(n->ind & ZERO) && (n->ind & SHARP))
-		res = fstrjoin(ft_strdup(i), res);
+		res = fstrjoin(ft_strdup_safe(i), res);
 	if ((n->ind & PRECISION || n->ind & ZERO) && (n->precision || !nb))
 		res = add_prec(res, n);
 	if (n->ind & SHARP && (n->ind & PRECISION || n->ind & ZERO))
-		res = fstrjoin(ft_strdup(i), res);
+		res = fstrjoin(ft_strdup_safe(i), res);
 	res = add_ind(res, n);
 	res = (n->conv == BIGX) ? ft_strupper(res) : res;
 	buffer(p, res, ft_strlen(res));
@@ -109,12 +109,12 @@ void		handle_ptr(t_param *n, t_printf *p)
 	char	*res;
 
 	if (n->precision == 0)
-		res = ft_strdup("");
+		res = ft_strdup_safe("");
 	else
 		res = ft_itoa_base((uintmax_t)n->data.ptr, 16);
 	if (n->ind & CLEAR && n->width > n->precision)
 	{
-		res = fstrjoin(ft_strdup("0x"), res);
+		res = fstrjoin(ft_strdup_safe("0x"), res);
 		if (n->precision)
 			res = add_prec(res, n);
 		res = add_ind(res, n);
@@ -124,7 +124,7 @@ void		handle_ptr(t_param *n, t_printf *p)
 		n->width -= 2;
 		res = add_prec(res, n);
 		res = add_ind(res, n);
-		res = fstrjoin(ft_strdup("0x"), res);
+		res = fstrjoin(ft_strdup_safe("0x"), res);
 	}
 	buffer(p, res, ft_strlen(res));
 	free(res);

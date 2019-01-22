@@ -27,6 +27,7 @@ SOURCES = arguments.c \
 		  hand_base.c \
 		  hand_string.c \
 		  useful_functions.c \
+		  useful_functions_2.c \
 		  ft_printf.c \
 		  hand_di.c \
 		  indentation.c \

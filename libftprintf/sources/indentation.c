@@ -6,7 +6,7 @@
 /*   By: nalonso <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 11:21:13 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/18 16:01:27 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/21 12:43:21 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*add_prec(char *str, t_param *node)
 	if (node->precision == 0)
 	{
 		free(str);
-		return (ft_strdup(""));
+		return (ft_strdup_safe(""));
 	}
 	if (len >= node->precision)
 		return (str);

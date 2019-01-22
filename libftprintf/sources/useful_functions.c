@@ -6,20 +6,11 @@
 /*   By: nalonso <nalonso@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 10:11:31 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/14 16:42:34 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/21 12:43:42 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-void	*malloc_safe(size_t size)
-{
-	void	*tmp;
-
-	if (!(tmp = malloc(size)))
-		exit(1);
-	return (tmp);
-}
 
 char	*add_char(char *str, char c)
 {
@@ -89,7 +80,7 @@ char	*ft_itoa_base(uintmax_t num, int base)
 
 	i = 0;
 	if (num == 0)
-		return (ft_strdup("0"));
+		return (ft_strdup_safe("0"));
 	while (num != 0)
 	{
 		rem = num % base;
@@ -98,5 +89,5 @@ char	*ft_itoa_base(uintmax_t num, int base)
 	}
 	str[i] = '\0';
 	reverse(str, i);
-	return (ft_strdup(str));
+	return (ft_strdup_safe(str));
 }

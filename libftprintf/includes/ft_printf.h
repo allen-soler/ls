@@ -6,7 +6,7 @@
 /*   By: nalonso <nalonso@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 11:23:56 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/22 16:09:15 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/21 12:42:31 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define SHARP (1 << 6)
 # define PRECISION (1 << 7)
 # define NEGATIVE (1 << 8)
+# define WILDCARD (1 << 9)
 
 /*
 ** Color escape codes
@@ -40,7 +41,7 @@
 # define RED     "\033[31m"
 # define GREEN   "\033[32m"
 # define YELLOW  "\033[33m"
-# define BLUE    "\x1b[96m"
+# define BLUE    "\033[34m"
 # define MAGENTA "\033[35m"
 # define CYAN    "\033[36m"
 # define WHITE   "\033[37m"
@@ -140,10 +141,12 @@ void				handle_c(t_param *node, t_printf *head);
 void				handle_float(t_param *a, t_printf *p);
 void				handle_base(t_param *n, unsigned int base, t_printf *p);
 void				handle_hexa(t_param *n, unsigned int base, t_printf *p);
-void				parse_flags(t_printf *p);
+void				parse_flags(t_printf *p, va_list al);
 void				search_width_precision(t_printf *p);
 void				convert_arg(t_printf *p);
 void				search_arg(t_param *new, va_list al);
 void				handle_n(t_printf *p, va_list al);
 void				handle_binary(t_printf *p);
+char				*ft_strdup_safe(const char *s1);
+
 #endif

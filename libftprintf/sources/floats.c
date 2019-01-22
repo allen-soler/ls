@@ -6,7 +6,7 @@
 /*   By: nalonso <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 12:13:23 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/19 15:23:22 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/21 12:42:34 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void			dtoa_string(long double n, t_param *a, long value, t_printf *p)
 		ft_strcat(s, buff);
 		free(buff);
 	}
-	buff = ft_strdup(s);
+	buff = ft_strdup_safe(s);
 	float_indentation(buff, a, n, p);
 }
 

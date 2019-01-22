@@ -6,12 +6,26 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 16:07:41 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 20:04:03 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
+void		spaces(void)
+{
+	grp = getgrgid(f_stat.st_gid);
+	g_space.one = counting_spaces(g_space.one, f_stat.st_size, 0);
+	g_space.two = counting_spaces(g_space.two, f_stat.st_nlink, 0);
+	g_space.name = counting_spaces(g_space.name, ft_strlen(sd->d_name), 1);
+	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
+	{
+		g_space.user = counting_spaces(g_space.group,\
+				ft_strlen(pwd->pw_name), 1);
+		g_space.group = counting_spaces(g_space.group,\
+				ft_strlen(grp->gr_name), 1);
+	}
+}
 static int	adding_n(int i)
 {
 	if (i == 0)
@@ -46,8 +60,7 @@ static void	adding_path(t_lst **d_path, t_lst **head, char *path, int *i)
 	if (adding_n(0))
 	{
 		lst_add(head, new_node(sd->d_name, (long)time));
-		g_space.one = counting_spaces(g_space.one, f_stat.st_size);
-		g_space.two = counting_spaces(g_space.two, f_stat.st_nlink);
+		spaces();
 	}
 	if (sd->d_type == DT_DIR && adding_n(1))
 		lst_add(d_path, new_node(tmp, (long)time));
@@ -64,6 +77,9 @@ static void	adding_list(DIR *d, char *path, t_lst **d_path)
 	head = NULL;
 	g_space.one = 0;
 	g_space.two = 0;
+	g_space.name = 0;
+	g_space.group = 0;
+	g_space.user = 0;
 	while ((sd = readdir(d)) != NULL)
 	{
 		tmp = ft_strjoin(path, sd->d_name);

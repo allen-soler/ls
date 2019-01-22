@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 18:05:20 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 19:58:28 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	valid_av(int ac, char **av, int *i)
 				ok = 0;
 				if (ok == 0)
 				{
-					ft_fprintf(2, "ls : illegaloption -- %c\
+					ft_fprintf(2, "ls : illegal option -- %c\
 							\nusage : ls [-aGlRrt1f] [file ...]\n", av[*i][j]);
 					exit(1);
 				}

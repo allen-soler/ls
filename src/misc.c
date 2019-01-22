@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 18:02:07 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 19:56:57 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,34 +79,50 @@ void		printing_files(char *file, t_lst *path)
 	}
 }
 
-int			counting_spaces(int spaces, int max)
+int			counting_spaces(int spaces, int max, int len)
 {
-	if (max > spaces)
-		return (max);
-	return (spaces);
-}
-
-void		ft_putnchar(char c, int max, int min)
-{
-	int	i;
-	int	j;
+	int		i;
 
 	i = 0;
-	j = 0;
+	if (len == 0)
+	{
+		while (max > 0)
+		{
+			i++;
+			max /= 10;
+		}
+		if (i > spaces)
+			return (i);
+		return (spaces);
+	}
+	else if (len == 1)
+	{
+		if (max > spaces)
+			return (max);
+		return (spaces);
+	}
+	return (0);
+}
+
+void		ft_putnchar(char c, int max, int min, int len)
+{
+	int	i;
+
+	i = 0;
+	if (len == 0)
+	{
+		while (min > 0)
+		{
+			i++;
+			min /= 10;
+		}
+		max = max - i;
+	}
+	else if (len == 1)
+		max = max - min + 1;
 	while (max > 0)
 	{
-		i++;
-		max /= 10;
-	}
-	while (min > 0)
-	{
-		j++;
-		min /= 10;
-	}
-	i = i - j;
-	while (i > 0)
-	{
 		write(1, &c, 1);
-		i--;
+		max--;
 	}
 }

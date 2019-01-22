@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 16:08:45 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/14 16:44:35 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 19:26:51 by nestoralo        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		parse_modifiers(t_printf *p)
 
 	a = p->curr;
 	a->mod = NO;
-	while (42)
+	while (69)
 	{
 		if (*p->inp == 'l')
 			a->mod = (p->inp[1] == 'l' && ++p->inp) ? LL : L;
@@ -64,16 +64,16 @@ void		parse_modifiers(t_printf *p)
 	}
 }
 
-void		parse_options(t_printf *p)
+void		parse_options(t_printf *p, va_list al)
 {
 	p->curr = (t_param *)malloc_safe(sizeof(t_param));
 	p->curr->ind = 0;
 	p->curr->width = 0;
 	p->curr->precision = 1;
-	parse_flags(p);
+	parse_flags(p, al);
 	search_width_precision(p);
 	parse_modifiers(p);
-	parse_flags(p);
+	parse_flags(p, al);
 	if (*p->inp == 'b')
 	{
 		if (p->curr->ind & PRECISION)
@@ -88,7 +88,7 @@ void		parse_options(t_printf *p)
 
 void		parse_arg(t_printf *p, va_list al)
 {
-	parse_options(p);
+	parse_options(p, al);
 	if (*p->inp == '%')
 		handle_percent(p);
 	else if (*p->inp == 'n')

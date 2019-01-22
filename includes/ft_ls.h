@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 16:31:47 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 19:56:23 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ typedef struct		s_sp
 {
 	int				one;
 	int				two;
+	int				name;
+	int				user;
+	int				group;
 }					t_sp;
 
 typedef short		t_fl;
@@ -103,8 +106,8 @@ char				*g_rights(struct stat fstat, char *rights, char *path);
 /*
 ** spaces + misc
 */
-int					counting_spaces(int spaces, int max);
-void				ft_putnchar(char c, int max, int min);
+int					counting_spaces(int spaces, int max, int len);
+void				ft_putnchar(char c, int max, int min, int len);
 /*
 ** multi file
 */

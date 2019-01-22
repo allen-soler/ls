@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 18:06:04 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 19:45:08 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		ft_ls_l(char *name, char *buf, char *path)
 	rights = g_rights(f_stat, rights, path);
 	grp = getgrgid(f_stat.st_gid);
 	ft_printf("%s ", rights);
-	ft_putnchar(32, g_space.two, f_stat.st_nlink);
+	ft_putnchar(32, g_space.two, f_stat.st_nlink, 0);
 	ft_printf("%i ", (int)f_stat.st_nlink);
 	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
 		ft_printf("%s  %s", pwd->pw_name, grp->gr_name);
@@ -76,7 +76,7 @@ void		ft_ls_l(char *name, char *buf, char *path)
 				(int32_t)((f_stat.st_rdev) & 0xffffff));
 	else
 	{
-		ft_putnchar(32, g_space.one, f_stat.st_size);
+		ft_putnchar(32, g_space.one, f_stat.st_size, 0);
 		ft_printf("  %lld ", f_stat.st_size);
 	}
 	get_time(f_stat);
@@ -98,7 +98,7 @@ void		ft_normal_ls(t_lst *current, char *path)
 		lstat(tmp, &f_stat);
 		rights = g_rights(f_stat, rights, tmp);
 		ls_colors(current->content, buf, rights, 0);
-		ft_putchar(' ');
+		ft_putnchar(32, g_space.name, ft_strlen(current->content), 1);
 		current = current->next;
 	}
 	ft_putchar('\n');

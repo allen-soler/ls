@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/21 23:33:05 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 19:07:51 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_lst	*new_node(char *name, int data)
 		new_node->content = ft_strdup(name);
 	new_node->data = data;
 	new_node->next = NULL;
-	new_node->child = NULL;
 	return (new_node);
 }
 

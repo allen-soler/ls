@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 16:11:26 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/14 16:11:28 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 19:44:50 by nestoralo        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ void			search_width_precision(t_printf *p)
 		p->curr->ind |= NONE;
 }
 
-void			parse_flags(t_printf *p)
+void			parse_flags(t_printf *p, va_list al)
 {
-	while (ft_strchr("#+- 0", *p->inp))
+	while (ft_strchr("#+- 0*", *p->inp))
 	{
 		if (*p->inp == '#')
 			p->curr->ind |= SHARP;
@@ -127,6 +127,16 @@ void			parse_flags(t_printf *p)
 			p->curr->ind |= SPACE;
 		else if (*p->inp == '0')
 			p->curr->ind |= ZERO;
+		else if (*p->inp == '*')
+			p->curr->ind |= WILDCARD;
 		++p->inp;
 	}
+	if (p->curr->ind & WILDCARD)
+	{
+		p->curr->ind &= ~WILDCARD;
+		if ((p->curr->width = va_arg(al, int)) < 0)
+			p->curr->ind |= MINUS;
+		p->curr->ind |= CLEAR;
+	}
 }
+
