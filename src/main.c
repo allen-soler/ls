@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:43:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/21 23:35:59 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 16:32:56 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void		ls_options(char *av)
 			g_flag |= RR;
 		if (av[i] == 'G')
 			g_flag |= G;
+		if (av[i] == 'f')
+			g_flag |= F;
+		if (av[i] == '1')
+			g_flag |= ONE;
 		i++;
 	}
 }
@@ -46,13 +50,13 @@ static void	valid_av(int ac, char **av, int *i)
 		while (av[*i][j])
 		{
 			ok = 1;
-			if (!ft_strchr("arRltG", av[*i][j]))
+			if (!ft_strchr("arRltG1f", av[*i][j]))
 			{
 				ok = 0;
 				if (ok == 0)
 				{
 					ft_fprintf(2, "ls : illegaloption -- %c\
-							\nusage : ls [-aGlRrt] [file ...]\n", av[*i][j]);
+							\nusage : ls [-aGlRrt1f] [file ...]\n", av[*i][j]);
 					exit(1);
 				}
 			}
@@ -71,23 +75,21 @@ static void	multi_file(char **av, int ac, int start)
 	paths = NULL;
 	tmp = NULL;
 	check_args(av, ac, &start, &paths);
-	ft_printf("%i\n", start);
 	while (paths)
 	{
-		if (start > 1)
-			ft_printf("%s\n", paths->content);
+		if (start >= 1 && paths->data == 1)
+			ft_printf("\n%s:\n", paths->content);
 		if (paths->data != 1)
-			printing_files(paths->content);
+			printing_files(paths->content, paths);
 		else
 		{
 			tmp = check_p(paths->content, "", 0);
 			add_path(tmp, 0);
 			free(tmp);
 		}
-		if (paths->next)
-			ft_putchar('\n');
 		free_node(paths);
 		paths = paths->next;
+		start++;
 	}
 }
 

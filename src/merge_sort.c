@@ -6,7 +6,7 @@
 /*   By: nalonso <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:48:42 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/21 23:18:34 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 16:08:14 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ static t_lst	*sort_and_merge_ascii(t_lst *a, t_lst *b)
 		return (b);
 	else if (!b)
 		return (a);
-	if (ft_strcmp(a->content, b->content) >= 0)
+	if (ft_strcmp(a->content, b->content) > 0)
 	{
 		result = b;
-		result->next = sort_and_merge(b->next, a);
+		result->next = sort_and_merge_ascii(b->next, a);
 	}
 	else
 	{
 		result = a;
-		result->next = sort_and_merge(a->next, b);
+		result->next = sort_and_merge_ascii(a->next, b);
 	}
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/21 23:36:44 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 16:31:54 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void		check_args(char **av, int ac, int *start, t_lst **paths)
 	{
 		time = 0;
 		ret = lstat(av[*start], &f_stat);
-		if (f_stat.st_mode > time)
-			time = f_stat.st_mtime;
+		(f_stat.st_mode > time) ? time = f_stat.st_mtime : 0;
 		if (check_errors(av[*start], ret, 0) == 1)
 			lst_add(paths, new_node(av[*start], (long)time));
 		else if (check_errors(av[*start], ret, 1) == 2)
@@ -52,27 +51,31 @@ void		check_args(char **av, int ac, int *start, t_lst **paths)
 		*start = *start + 1;
 	}
 	sorting(&folders, paths);
-	while (folders && (*start = 0))
+	*start = 0;
+	while (folders)
 	{
 		lst_add(paths, new_node(folders->content, 1));
 		free_node(folders);
 		folders = folders->next;
-		*start = *start + 1;
 	}
 }
 
-void		printing_files(char *file)
+void		printing_files(char *file, t_lst *path)
 {
 	char	*tmp;
 	char	buf[1000];
 
 	if ((g_flag & L) == 0)
-		ft_printf("%s\n", file);
+	{
+		ft_printf("%s ", file);
+		if (path->next == NULL)
+			ft_putchar('\n');
+	}
 	else if (g_flag & L)
 	{
 		lstat(file, &f_stat);
 		readlink(tmp, buf, 1000);
-		ft_ls_l(file, buf);
+		ft_ls_l(file, buf, file);
 	}
 }
 

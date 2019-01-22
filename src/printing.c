@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/21 23:07:58 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 16:36:59 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		ft_ls_l(char *name, char *buf, char *path)
 	rights = 0;
 	rights = g_rights(f_stat, rights, path);
 	grp = getgrgid(f_stat.st_gid);
-	ft_printf("%s  ", rights);
+	ft_printf("%s ", rights);
 	ft_putnchar(32, g_space.two, f_stat.st_nlink);
 	ft_printf("%i ", (int)f_stat.st_nlink);
 	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
@@ -87,19 +87,16 @@ void		ft_normal_ls(t_lst *current, char *path)
 {
 	char	*rights;
 	char	*tmp;
+	char	buf[1000];
 
 	rights = NULL;
+	ft_bzero(buf, 1000);
 	while (current)
 	{
 		tmp = ft_strjoin(path, current->content);
 		lstat(tmp, &f_stat);
-		rights = g_rights(f_stat, rights);
-		if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && g_flag & G)
-			ft_printf("{r}%s{R} ", current->content);
-		else if (rights[0] == 'd' && g_flag & G)
-			ft_printf("{c}%s{R} ", current->content);
-		else
-			ft_printf("%s ", current->content);
+		rights = g_rights(f_stat, rights, tmp);
+		ls_colors(current->content, buf, rights);
 		current = current->next;
 	}
 	ft_putchar('\n');
@@ -111,7 +108,8 @@ void		ft_print_ls(t_lst *head, char *path, int i)
 	char	*tmp;
 	char	buf[1000];
 
-	if (g_flag & L)
+	ft_bzero(buf, 1000);
+	if (g_flag & L && (ONE & g_flag) == 0)
 	{
 		ft_printf("total : %i\n", i);
 		while (head)

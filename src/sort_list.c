@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:28:10 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/21 22:57:10 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 16:42:58 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,25 @@ void	reverse_child(t_lst **head_ref)
 
 void	sorting(t_lst **current, t_lst **d_path)
 {
-	if (current)
+	if ((g_flag & F) == 0)
 	{
-		if ((g_flag & T) == 0)
+		if ((g_flag & T) == 0 && current)
 			merge_sort(current, 1);
-		if (g_flag & T)
+		if (g_flag & T && current)
 			merge_sort(current, 0);
-		if (g_flag & RR)
+		if (g_flag & RR && current)
 			reverse_child(current);
-	}
-	if (d_path)
-	{
-		if ((g_flag & T) < 0)
+		if ((g_flag & T && d_path) == 0)
 			merge_sort(d_path, 1);
-		if (g_flag & T)
+		if (g_flag & T && d_path)
 			merge_sort(d_path, 0);
-		if (g_flag & RR)
+		if (g_flag & RR && d_path)
 			reverse_child(d_path);
+	}
+	else if (g_flag & F)
+	{
+		merge_sort(current, 1);
+		merge_sort(d_path, 1);
 	}
 }
 

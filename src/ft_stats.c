@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 14:15:40 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/18 14:43:02 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 16:19:29 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ static char	acl_check(char *path)
 	return (' ');
 }
 
-char		*g_rights(struct stat fstat, char *rightsi, char *path)
+char		*g_rights(struct stat fstat, char *rights, char *path)
 {
-	if (!(rights = malloc(sizeof(char) * 12§)))
+	if (!(rights = malloc(sizeof(char) * 12)))
 		return (0);
 	file_type(rights, fstat);
 	rights[1] = *((fstat.st_mode & S_IRUSR) ? "r" : "-");
@@ -109,11 +109,11 @@ char		*g_rights(struct stat fstat, char *rightsi, char *path)
 	rights[9] = *((fstat.st_mode & S_IXOTH) ? "x" : "-");
 	rights[10] = acl_check(path);
 	rights[11] = '\0';
-	if (S_ISUID & mode)
+	if (S_ISUID & fstat.st_mode)
 		rights[3] = rights[3] == '-' ? 'S' : 's';
-	if (S_ISGID & mode)
+	if (S_ISGID & fstat.st_mode)
 		rights[6] = rights[6] == '-' ? 'S' : 's';
-	if (S_ISVTX & mode)
+	if (S_ISVTX & fstat.st_mode)
 		rights[9] = rights[9] == '-' ? 'T' : 't';
 	return (rights);
 }

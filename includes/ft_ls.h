@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/21 23:30:12 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 16:31:47 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 # include <grp.h>
 # include <time.h>
 # include <errno.h>
+# include <sys/acl.h>
+# include <sys/xattr.h>
 # define C_RED     "\x1b[31m"
 # define C_GREEN   "\x1b[32m"
 # define C_YELLOW  "\x1b[43m"
-# define C_BLUE    "\x1b[96m"
 # define C_MAGENTA "\x1b[35m"
 # define C_CYAN    "\x1b[36m"
 # define C_RESET   "\x1b[0m"
@@ -39,6 +40,8 @@
 # define RR (1 << 3)
 # define T (1 << 4)
 # define G (1 << 5)
+# define F (1 << 6)
+# define ONE (1 << 7)
 
 struct dirent	*sd;
 struct stat		f_stat;
@@ -63,7 +66,6 @@ typedef short		t_fl;
 
 t_fl	g_flag;
 t_sp	g_space;
-
 
 /*
 **Nodes + nodes tools
@@ -91,8 +93,8 @@ void				add_path(char *path, int i);
 */
 void				ft_normal_ls(t_lst *current, char *path);
 void				ft_print_ls(t_lst *head, char *path, int i);
-void				printing_files(char *file);
-void				ft_ls_l(char *name, char *buf);
+void				printing_files(char *file, t_lst *path);
+void				ft_ls_l(char *name, char *buf, char *path);
 /*
 **stats
 */

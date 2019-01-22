@@ -6,7 +6,7 @@
 /*   By: nalonso <nalonso@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 11:23:56 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/19 15:25:48 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/22 16:09:15 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define RED     "\033[31m"
 # define GREEN   "\033[32m"
 # define YELLOW  "\033[33m"
-# define BLUE    "\033[34m"
+# define BLUE    "\x1b[96m"
 # define MAGENTA "\033[35m"
 # define CYAN    "\033[36m"
 # define WHITE   "\033[37m"
