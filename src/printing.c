@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 16:36:59 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 18:06:04 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	get_time(struct stat date)
 	free(f_time);
 }
 
-static void	ls_colors(char *name, char *buf, char *rights)
+static void	ls_colors(char *name, char *buf, char *rights, int i)
 {
 	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && g_flag & G)
 		ft_printf("{r}%s{R}", name);
@@ -55,7 +55,8 @@ static void	ls_colors(char *name, char *buf, char *rights)
 		ft_printf("%s", name);
 	if (rights[0] == 'l')
 		ft_printf(" -> %s", buf);
-	ft_putchar('\n');
+	if (i == 1)
+		ft_putchar('\n');
 }
 
 void		ft_ls_l(char *name, char *buf, char *path)
@@ -79,7 +80,7 @@ void		ft_ls_l(char *name, char *buf, char *path)
 		ft_printf("  %lld ", f_stat.st_size);
 	}
 	get_time(f_stat);
-	ls_colors(name, buf, rights);
+	ls_colors(name, buf, rights, 1);
 	free(rights);
 }
 
@@ -96,7 +97,8 @@ void		ft_normal_ls(t_lst *current, char *path)
 		tmp = ft_strjoin(path, current->content);
 		lstat(tmp, &f_stat);
 		rights = g_rights(f_stat, rights, tmp);
-		ls_colors(current->content, buf, rights);
+		ls_colors(current->content, buf, rights, 0);
+		ft_putchar(' ');
 		current = current->next;
 	}
 	ft_putchar('\n');

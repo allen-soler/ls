@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 16:31:54 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/22 18:02:07 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		printing_files(char *file, t_lst *path)
 	if ((g_flag & L) == 0)
 	{
 		ft_printf("%s ", file);
-		if (path->next == NULL)
+		if (path == NULL || path->data == 1)
 			ft_putchar('\n');
 	}
 	else if (g_flag & L)
