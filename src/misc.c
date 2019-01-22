@@ -52,8 +52,7 @@ void		check_args(char **av, int ac, int *start, t_lst **paths)
 		*start = *start + 1;
 	}
 	sorting(&folders, paths);
-	*start = 0;
-	while (folders)
+	while (folders && (*start = 0))
 	{
 		lst_add(paths, new_node(folders->content, 1));
 		free_node(folders);

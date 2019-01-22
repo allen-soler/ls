@@ -78,9 +78,24 @@ static void	file_type(char *rights, struct stat fstat)
 		rights[0] = '-';
 }
 
-char		*g_rights(struct stat fstat, char *rights)
+static char	acl_check(char *path)
 {
-	if (!(rights = malloc(sizeof(char) * 11)))
+	acl_t	get_acl;
+	char	buf[101];
+
+	if (listxattr(path, buf, sizeof(buf), XATTR_NOFOLLOW) > 0)
+		return ('@');
+	if ((get_acl = acl_get_link_np(path, ACL_TYPE_EXTENDED)))
+	{
+		acl_free(get_acl);
+		return ('+');
+	}
+	return (' ');
+}
+
+char		*g_rights(struct stat fstat, char *rightsi, char *path)
+{
+	if (!(rights = malloc(sizeof(char) * 12§)))
 		return (0);
 	file_type(rights, fstat);
 	rights[1] = *((fstat.st_mode & S_IRUSR) ? "r" : "-");
@@ -92,6 +107,13 @@ char		*g_rights(struct stat fstat, char *rights)
 	rights[7] = *((fstat.st_mode & S_IROTH) ? "r" : "-");
 	rights[8] = *((fstat.st_mode & S_IWOTH) ? "w" : "-");
 	rights[9] = *((fstat.st_mode & S_IXOTH) ? "x" : "-");
-	rights[10] = '\0';
+	rights[10] = acl_check(path);
+	rights[11] = '\0';
+	if (S_ISUID & mode)
+		rights[3] = rights[3] == '-' ? 'S' : 's';
+	if (S_ISGID & mode)
+		rights[6] = rights[6] == '-' ? 'S' : 's';
+	if (S_ISVTX & mode)
+		rights[9] = rights[9] == '-' ? 'T' : 't';
 	return (rights);
 }

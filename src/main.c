@@ -71,6 +71,7 @@ static void	multi_file(char **av, int ac, int start)
 	paths = NULL;
 	tmp = NULL;
 	check_args(av, ac, &start, &paths);
+	ft_printf("%i\n", start);
 	while (paths)
 	{
 		if (start > 1)

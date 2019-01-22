@@ -97,7 +97,7 @@ void				ft_ls_l(char *name, char *buf);
 **stats
 */
 int					ft_chmod(char *rights);
-char				*g_rights(struct stat fstat, char *rights);
+char				*g_rights(struct stat fstat, char *rights, char *path);
 /*
 ** spaces + misc
 */

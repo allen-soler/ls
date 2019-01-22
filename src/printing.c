@@ -58,12 +58,12 @@ static void	ls_colors(char *name, char *buf, char *rights)
 	ft_putchar('\n');
 }
 
-void		ft_ls_l(char *name, char *buf)
+void		ft_ls_l(char *name, char *buf, char *path)
 {
 	char			*rights;
 
 	rights = 0;
-	rights = g_rights(f_stat, rights);
+	rights = g_rights(f_stat, rights, path);
 	grp = getgrgid(f_stat.st_gid);
 	ft_printf("%s  ", rights);
 	ft_putnchar(32, g_space.two, f_stat.st_nlink);
@@ -119,7 +119,7 @@ void		ft_print_ls(t_lst *head, char *path, int i)
 			tmp = ft_strjoin(path, head->content);
 			lstat(tmp, &f_stat);
 			readlink(tmp, buf, 1000);
-			ft_ls_l(head->content, buf);
+			ft_ls_l(head->content, buf, tmp);
 			head = head->next;
 			free(tmp);
 		}
