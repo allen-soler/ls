@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 12:18:15 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/23 13:50:34 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	get_time(struct stat date)
 	time(&rawtime);
 	foo = localtime(&rawtime);
 	foo1 = gmtime(&(date.st_mtime));
-	if (foo->tm_mon - foo1->tm_mon <= -6 || foo->tm_mon - foo1->tm_mon >= 6)
+	if (foo->tm_mon - foo1->tm_mon <= -6 || foo->tm_mon - foo1->tm_mon >= 6 ||
+			foo->tm_year - foo->tm_year <= 2)
 	{
 		f_time = ft_strsub(ctime(&date.st_mtime), 4, 6);
 		ft_printf("%s  ", f_time);
