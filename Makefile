@@ -13,7 +13,7 @@ DIR_O = temporary
 
 DIR_H = includes
 
-SOURCES = merge_sort.c ft_stats.c getpath.c list_tools.c printing.c main.c misc.c sort_list.c
+SOURCES = merge_sort.c ft_stats.c getpath.c list_tools.c printing.c main.c files.c sort_list.c printing_tools.c
 
 SRCS = $(addprefix $(DIR_S)/, $(SOURCES))
 

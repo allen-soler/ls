@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 20:22:46 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 13:59:50 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void				ft_normal_ls(t_lst *current, char *path);
 void				ft_print_ls(t_lst *head, char *path, int i);
 void				printing_files(char *file, t_lst *path);
 void				ft_ls_l(char *name, char *buf, char *path);
+int					num_len(int nb);
 /*
 **stats
 */

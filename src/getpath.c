@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 21:10:30 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 14:32:22 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		spaces(void)
 	g_space.name = counting_spaces(g_space.name, ft_strlen(sd->d_name), 1);
 	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
 	{
-		g_space.user = counting_spaces(g_space.group,\
+		g_space.user = counting_spaces(g_space.user,\
 				ft_strlen(pwd->pw_name), 1);
 		g_space.group = counting_spaces(g_space.group,\
 				ft_strlen(grp->gr_name), 1);

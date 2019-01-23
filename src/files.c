@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 13:37:35 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 14:00:55 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,48 +78,4 @@ void		printing_files(char *file, t_lst *path)
 		readlink(tmp, buf, 1000);
 		ft_ls_l(file, buf, file);
 	}
-}
-
-int			counting_spaces(int spaces, int max, int len)
-{
-	int		i;
-
-	i = 0;
-	if (len == 0)
-	{
-		while (max > 0)
-		{
-			i++;
-			max /= 10;
-		}
-		if (i > spaces)
-			return (i);
-		return (spaces);
-	}
-	else if (len == 1)
-	{
-		if (max > spaces)
-			return (max);
-		return (spaces);
-	}
-	return (0);
-}
-
-int			n_sp(int max, int min, int len)
-{
-	int	i;
-
-	i = 0;
-	if (len == 0)
-	{
-		while (min > 0)
-		{
-			i++;
-			min /= 10;
-		}
-		max = max - i;
-	}
-	else if (len == 1)
-		max = max - min + 1;
-	return (max);
 }
