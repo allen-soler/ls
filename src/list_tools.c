@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 20:38:57 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 12:32:51 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	free_list(t_lst *head)
 
 void	free_node(t_lst *head)
 {
-	free(head->content);
+	if (head->content)
+		free(head->content);
 	free(head);
 }
 
