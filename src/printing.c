@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 21:14:45 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 12:16:42 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,19 @@ static void	ls_colors(char *name, char *buf, char *rights, int i)
 		ft_putchar('\n');
 }
 
+static int		num_len(int nb)
+{
+	int i;
+
+	i = 0;
+	while (nb != 0)
+	{
+		nb /= 10;
+		i++;
+	}
+	return (i);
+}
+
 void		ft_ls_l(char *name, char *buf, char *path)
 {
 	char			*rights;
@@ -68,19 +81,18 @@ void		ft_ls_l(char *name, char *buf, char *path)
 	rights = g_rights(f_stat, rights, path);
 	grp = getgrgid(f_stat.st_gid);
 	sp[0] = n_sp(g_space.two, (int)f_stat.st_nlink, 0) + 1;
-	sp[1] = n_sp(g_space.one, (int)f_stat.st_size, 0);
+	sp[1] = n_sp(g_space.one, (int)f_stat.st_size, 0) + num_len((int)f_stat.st_size) + 2;
 	sp[2] = n_sp(g_space.two, ft_strlen(name), 0);
 	sp[3] = n_sp(g_space.two, ft_strlen(name), 0);
-	ft_printf("%i\n", sp[1]);
 	ft_printf("%s ", rights);
-	ft_printf("%*i ", sp[0], (int)f_stat.st_nlink);
+	ft_printf("%*d ", sp[0], (int)f_stat.st_nlink);
 	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
 		ft_printf("%s  %s", pwd->pw_name, grp->gr_name);
 	if (S_ISCHR(f_stat.st_mode) || S_ISBLK(f_stat.st_mode))
 		ft_printf("  %5d, %d ", (int32_t)(((f_stat.st_rdev) >> 24) & 0xff),
 				(int32_t)((f_stat.st_rdev) & 0xffffff));
 	else
-		ft_printf("%*i ", sp[1], (int)f_stat.st_size);
+		ft_printf("%*d ", sp[1], (int)f_stat.st_size);
 	get_time(f_stat);
 	ls_colors(name, buf, rights, 1);
 	free(rights);
