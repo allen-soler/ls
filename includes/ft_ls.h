@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 17:29:10 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 19:19:34 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void				add_path(char *path, int i);
 */
 void				ft_normal_ls(t_lst *current, char *path);
 void				ft_print_ls(t_lst *head, char *path, int i);
-void				printing_files(char *file, t_lst *path);
+void				printing_files(t_lst *path, t_lst *folders);
 void				ft_ls_l(char *name, char *buf, char *path);
 void				ls_colors(char *name, char *buf, char *rights, int i);
 int					num_len(int nb);
@@ -110,6 +110,7 @@ char				*g_rights(struct stat fstat, char *rights, char *path);
 */
 int					counting_spaces(int spaces, int max, int len);
 int					n_sp(int max, int min, int len);
+void				spaces(void);
 void				nchar(int space, char c);
 /*
 ** multi file

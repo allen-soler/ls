@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 20:45:01 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 18:04:20 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 19:05:00 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,11 @@ static void	multi_file(char **av, int ac, int start)
 	check_args(av, ac, start, &paths);
 	while (paths)
 	{
-		if (paths->data == 1 && start + 1< ac)
-			ft_printf("\n%s:\n", paths->content);
-		if (paths->data != 1)
-			printing_files(paths->content, paths->next);
-		else
-		{
-			tmp = check_p(paths->content, "", 0);
-			add_path(tmp, 0);
-			free(tmp);
-		}
+		tmp = check_p(paths->content, "", 0);
+		add_path(tmp, 0);
+		free(tmp);
 		free_node(paths);
 		paths = paths->next;
-		start++;
 	}
 }
 

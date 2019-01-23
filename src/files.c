@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 18:32:31 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 19:21:57 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_errors(char *path, int ret, int test)
 	{
 		if (i == 0 && test == 1)
 			ft_fprintf(2, "ls : %s %s\n", path, strerror(errno));
-		return (i);
+		return (0);
 	}
 	else
 		i = 2;
@@ -43,7 +43,7 @@ static int	check_errors(char *path, int ret, int test)
 void		check_args(char **av, int ac, int start, t_lst **paths)
 {
 	int		ret;
-	t_lst	*folders;
+	t_lst	*files;
 	time_t	time;
 
 	ft_sortav(ac, av, start);
@@ -53,36 +53,52 @@ void		check_args(char **av, int ac, int start, t_lst **paths)
 		ret = lstat(av[start], &f_stat);
 		(f_stat.st_mode > time) ? time = f_stat.st_mtime : 0;
 		if (check_errors(av[start], ret, 0) == 1)
-			lst_add(paths, new_node(av[start], (long)time));
+			lst_add(&files, new_node(av[start], (long)time));
 		else if (check_errors(av[start], ret, 1) == 2)
-			lst_add(&folders, new_node(av[start], (long)time));
+			lst_add(paths, new_node(av[start], (long)time));
 		start++;
 	}
-	sorting(&folders, paths);
-	while (folders)
-	{
-		lst_add(paths, new_node(folders->content, 1));
-		free_node(folders);
-		folders = folders->next;
-	}
+	sorting(paths, &files);
+	printing_files(files, *paths);		
 }
 
-void		printing_files(char *file, t_lst *path)
+static void	files_space(t_lst **path)
+{
+	while (*path)
+	{
+		stat((*path)->content, &f_stat);
+		spaces();
+		*path = (*path)->next;
+	}
+}
+void		printing_files(t_lst *path, t_lst *folders)
 {
 	char	*tmp;
 	char	buf[1000];
 
+	g_space.one = 0;
+	g_space.two = 0;
+	g_space.name = 0;
+	g_space.group = 0;
+	g_space.user = 0;
+	ft_bzero(buf, 1000);
+	tmp = NULL;
 	if ((g_flag & L) == 0)
 	{
-		ft_printf("%s ", file);
-		if (path == NULL || path->data == 1)
+		if (folders == NULL || folders->data == 1)
 			ft_putchar('\n');
 	}
 	else if (g_flag & L)
 	{
-		lstat(file, &f_stat);
-		readlink(tmp, buf, 1000);
-		ft_ls_l(file, buf, file);
+		files_space(&path);
+		while (path)
+		{
+			lstat(path->content, &f_stat);
+			readlink(path->content, buf, 1000);
+			ft_ls_l(path->content, buf, tmp);
+			free_node(path);
+			path = path->next;
+		}
 	}
 }
 
