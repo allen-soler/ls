@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 14:32:49 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 14:46:40 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	get_time(struct stat date)
 	time(&rawtime);
 	foo = localtime(&rawtime);
 	foo1 = gmtime(&(date.st_mtime));
-	if (foo->tm_mon - foo1->tm_mon <= -6 || foo->tm_mon - foo1->tm_mon >= 6 ||
-			foo->tm_year - foo->tm_year <= 2)
+	if ((foo->tm_mon - foo1->tm_mon <= -6 || foo->tm_mon - foo1->tm_mon >= 6)
+			&& foo->tm_year - foo->tm_year >= 2)
 	{
 		f_time = ft_strsub(ctime(&date.st_mtime), 4, 6);
 		ft_printf("%s  ", f_time);
@@ -113,7 +113,8 @@ void		ft_print_ls(t_lst *head, char *path, int i)
 	ft_bzero(buf, 1000);
 	if (g_flag & L && (ONE & g_flag) == 0)
 	{
-		ft_printf("total : %i\n", i);
+		if (head)
+			ft_printf("total %i\n", i);
 		while (head)
 		{
 			tmp = ft_strjoin(path, head->content);
