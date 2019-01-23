@@ -6,12 +6,24 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 14:46:40 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 15:26:21 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 #include <stdio.h>
+
+static size_t compute_time(struct tm *l)
+{
+	size_t	ret;
+
+	ret = ((l->tm_year * 365) * 24 * 3600);
+	ret += (l->tm_mon * 30 *  24) * 3600;
+	ret += (l->tm_mday) * 24 * 3600;
+	ret += (l->tm_hour) * 3600;
+	ret += (l->tm_min) * 60;
+	return (ret);
+}
 
 static void	get_time(struct stat date)
 {
@@ -24,8 +36,7 @@ static void	get_time(struct stat date)
 	time(&rawtime);
 	foo = localtime(&rawtime);
 	foo1 = gmtime(&(date.st_mtime));
-	if ((foo->tm_mon - foo1->tm_mon <= -6 || foo->tm_mon - foo1->tm_mon >= 6)
-			&& foo->tm_year - foo->tm_year >= 2)
+	if (compute_time(foo) - compute_time(foo1) > 15552000)
 	{
 		f_time = ft_strsub(ctime(&date.st_mtime), 4, 6);
 		ft_printf("%s  ", f_time);
