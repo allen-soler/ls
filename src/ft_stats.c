@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 14:15:40 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/22 16:19:29 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 12:57:56 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char		*check_p(char *path, char *o_path, int n)
 		r[i - 1] = ':';
 		return (r);
 	}
-	return (path);
+	r = ft_strdup(path);
+	return (r);
 }
 
 int			ft_chmod(char *rights)

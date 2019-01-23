@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 11:49:33 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/23 13:37:35 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void		check_args(char **av, int ac, int *start, t_lst **paths)
 		lst_add(paths, new_node(folders->content, 1));
 		free_node(folders);
 		folders = folders->next;
+		*start = *start + 1;
 	}
 }
 
