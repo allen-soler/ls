@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 15:26:21 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/23 18:32:34 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	get_time(struct stat date)
 	free(f_time);
 }
 
-static void	ls_colors(char *name, char *buf, char *rights, int i)
+void		ls_colors(char *name, char *buf, char *rights, int i)
 {
 	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && g_flag & G)
 		ft_printf("{r}%s{R}", name);
@@ -78,11 +78,13 @@ void		ft_ls_l(char *name, char *buf, char *path)
 	rights = 0;
 	rights = g_rights(f_stat, rights, path);
 	grp = getgrgid(f_stat.st_gid);
-	pwd = getpwuid(f_stat.st_uid);
 	ft_printf("%s ", rights);
 	ft_printf("%*d ", g_space.two, (int)f_stat.st_nlink);
-	ft_printf("%-*s%-*s", g_space.user + 2, pwd->pw_name,\
+	if ((pwd = getpwuid(f_stat.st_uid)))
+		ft_printf("%-*s%-*s", g_space.user + 2, pwd->pw_name,\
 			g_space.group, grp->gr_name);
+	else
+		ft_printf("      %*-s", g_space.group, grp->gr_name);
 	if (S_ISCHR(f_stat.st_mode) || S_ISBLK(f_stat.st_mode))
 		ft_printf("  %5d, %d ", (int32_t)(((f_stat.st_rdev) >> 24) & 0xff),
 				(int32_t)((f_stat.st_rdev) & 0xffffff));
@@ -90,29 +92,6 @@ void		ft_ls_l(char *name, char *buf, char *path)
 		ft_printf("%*d ", g_space.one + 2, (int)f_stat.st_size);
 	get_time(f_stat);
 	ls_colors(name, buf, rights, 1);
-	free(rights);
-}
-
-void		ft_normal_ls(t_lst *current, char *path)
-{
-	char	*rights;
-	char	*tmp;
-	char	buf[1000];
-	int		i;
-
-	rights = NULL;
-	ft_bzero(buf, 1000);
-	while (current)
-	{
-		i = n_sp(g_space.name, ft_strlen(current->content), 1);
-		tmp = ft_strjoin(path, current->content);
-		lstat(tmp, &f_stat);
-		rights = g_rights(f_stat, rights, tmp);
-		ls_colors(current->content, buf, rights, 0);
-		nchar(i, 32);
-		current = current->next;
-	}
-	ft_putchar('\n');
 	free(rights);
 }
 

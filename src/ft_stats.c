@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 14:15:40 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 12:57:56 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/23 16:06:38 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char		*check_p(char *path, char *o_path, int n)
 
 	i = ft_strlen(path);
 	r = NULL;
-	if (path[i - 1] != '/' && n == 0)
+	if (n == 0)
 	{
 		tmp = ft_strjoin(path, "/");
 		r = ft_strjoin(o_path, tmp);
