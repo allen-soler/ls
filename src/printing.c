@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/24 13:56:51 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/24 17:52:37 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void			ls_colors(char *name, char *buf, char *rights, int i)
 		ft_printf(C_MAGENTA"%s"C_RESET, name);
 	else if (rights[0] == 'c' && g_flag & G)
 		ft_printf(C_YELLOW"{b}%s{R}"C_RESET, name);
+	else if (rights[0] == 's' && g_flag & G)
+		ft_printf("{g}%s{R}", name);
 	else
 		ft_printf("%s", name);
 	if (rights[0] == 'l')
@@ -95,13 +97,25 @@ void			ft_ls_l(char *name, char *buf, char *path)
 	free(rights);
 }
 
+void			print_one(t_lst *current)
+{
+	while(current)
+	{
+
+		ft_printf("%s\n", current->content);
+		current = current->next;
+	}
+}
+
 void			ft_print_ls(t_lst *head, char *path, int i)
 {
 	char	*tmp;
 	char	buf[1000];
 
 	ft_bzero(buf, 1000);
-	if (g_flag & L && (ONE & g_flag) == 0)
+	if (g_flag & ONE)
+		print_one(head);
+	else if (g_flag & L && (ONE & g_flag) == 0)
 	{
 		if (head)
 			ft_printf("total %i\n", i);
@@ -116,5 +130,5 @@ void			ft_print_ls(t_lst *head, char *path, int i)
 		}
 	}
 	else
-		ft_normal_ls(head, path);
+		print_columns(head, path);
 }

@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/24 13:46:18 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/24 16:55:36 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <sys/acl.h>
 # include <sys/xattr.h>
+# include <sys/ioctl.h>
 # define C_RED     "\x1b[31m"
 # define C_GREEN   "\x1b[32m"
 # define C_YELLOW  "\x1b[43m"
@@ -47,13 +48,13 @@ struct dirent	*sd;
 struct stat		f_stat;
 struct passwd	*pwd;
 struct group	*grp;
+struct winsize	win;
 
 typedef struct		s_lst
 {
 	char			*content;
 	long			data;
 	struct s_lst	*next;
-	struct s_lst	*child;
 }					t_lst;
 
 typedef struct		s_sp
@@ -64,6 +65,17 @@ typedef struct		s_sp
 	int				user;
 	int				group;
 }					t_sp;
+
+typedef struct		s_col
+{
+	int				colwidth;
+	int				termwidth;
+	int				numcols;
+	int				numrows;
+	int				len;
+	int				row;
+	int				col;
+}					t_col;
 
 typedef short		t_fl;
 
@@ -94,10 +106,10 @@ void				add_path(char *path, int i);
 /*
 **printing
 */
-void				ft_normal_ls(t_lst *current, char *path);
 void				ft_print_ls(t_lst *head, char *path, int i);
 void				printing_files(t_lst *path, t_lst *folders);
 void				ft_ls_l(char *name, char *buf, char *path);
+void				print_columns(t_lst *l, char *path);
 void				ls_colors(char *name, char *buf, char *rights, int i);
 int					num_len(int nb);
 /*

@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:25 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/24 13:51:09 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/24 17:25:02 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,9 @@ void		printing_files(t_lst *path, t_lst *folders)
 	init();
 	if ((g_flag & L) == 0)
 	{
-		if (folders == NULL || folders->data == 1)
-			ft_putchar('\n');
+		print_columns(path, "");
+		free_list(path);
+		folders != NULL ? ft_putchar('\n') : exit(0);
 	}
 	else if (g_flag & L)
 	{
@@ -97,30 +98,6 @@ void		printing_files(t_lst *path, t_lst *folders)
 			free_node(path);
 			path = path->next;
 		}
-		if (folders)
-			ft_putchar('\n');
-	}
-}
-
-void		ft_normal_ls(t_lst *current, char *path)
-{
-	char	*rights;
-	char	*tmp;
-	char	buf[1000];
-	int		i;
-
-	rights = NULL;
-	ft_bzero(buf, 1000);
-	while (current)
-	{
-		i = n_sp(g_space.name, ft_strlen(current->content), 1);
-		tmp = ft_strjoin(path, current->content);
-		lstat(tmp, &f_stat);
-		rights = g_rights(f_stat, rights, tmp);
-		ls_colors(current->content, buf, rights, 0);
-		ft_putchar('\n');
-		current = current->next;
-		free(rights);
-		free(tmp);
+		folders != NULL ? ft_putchar('\n') : exit(0);
 	}
 }

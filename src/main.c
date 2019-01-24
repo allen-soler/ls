@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 20:45:01 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/24 13:36:36 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/24 17:35:27 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,17 @@ void		ls_options(char *av)
 static void	valid_av(int ac, char **av, int *i)
 {
 	int	j;
-	int	ok;
 
 	while (*i < ac && ft_strlen(av[*i]) >= 2 && av[*i][0] == '-')
 	{
 		j = 1;
 		while (av[*i][j])
 		{
-			ok = 1;
-			if (!ft_strchr("arRltG1f", av[*i][j]))
+			if (!ft_strchr("arRlCtG1f", av[*i][j]))
 			{
-				ok = 0;
-				if (ok == 0)
-				{
-					ft_fprintf(2, "ls : illegal option -- %c\
-							\nusage : ls [-aGlRrt1f] [file ...]\n", av[*i][j]);
-					exit(1);
-				}
+				ft_fprintf(2, "ls : illegal option -- %c\
+						\nusage : ls [-aGlRrCt1f] [file ...]\n", av[*i][j]);
+				exit(1);
 			}
 			j++;
 		}
@@ -76,7 +70,9 @@ static void	multi_file(char **av, int ac, int start)
 	check_args(av, ac, start, &paths);
 	while (paths)
 	{
-		if (start < ac)
+		if ((ac > 2 || paths->next != NULL) && !(g_flag & L))
+			ft_printf("%s:\n", paths->content);
+		else if (ac > 3 || paths->next != NULL)
 			ft_printf("%s:\n", paths->content);
 		tmp = check_p(paths->content, "", 0);
 		add_path(tmp, 0);

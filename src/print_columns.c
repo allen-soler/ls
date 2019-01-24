@@ -6,13 +6,13 @@
 /*   By: nalonso <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 14:40:55 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/24 14:53:32 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/24 17:53:17 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-int			max_length(t_lst *l)
+static int	max_length(t_lst *l)
 {
 	int len;
 	int len1;
@@ -30,7 +30,7 @@ int			max_length(t_lst *l)
 	}
 }
 
-int			lst_len(t_lst *l)
+static int	lst_len(t_lst *l)
 {
 	if (!l)
 		return (0);
@@ -38,36 +38,56 @@ int			lst_len(t_lst *l)
 		return (1 + lst_len(l->next));
 }
 
-void		print_columns(t_lst *l)
+void		g_colors(char *name, char *path, int width)
 {
-	struct winsize win;
-	int		colwidth;
-	int		termwidth;
-	int		numcols;
-	int		numrows;
-	int		row;
-	int		len;
-	int		col;
-	
-	col = 0;
-	row = 0;
-	termwidth = 80;
+	char	*rights;
+	char	*tmp;
+
+	rights = NULL;
+	tmp = ft_strjoin(path, name);
+	lstat(tmp, &f_stat);
+	rights = g_rights(f_stat, rights, path);
+	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && g_flag & G)
+		ft_printf("{r}%-*s{R}", width, name);
+	else if (rights[0] == 'd' && g_flag & G)
+		ft_printf("{c}%-*s{R}", width, name);
+	else if (rights[0] == 'l' && g_flag & G)
+		ft_printf(C_MAGENTA"%-*s"C_RESET, width, name);
+	else if (rights[0] == 's' && g_flag & G)
+		ft_printf("{g}%-*s{R}", width, name);
+	else if (rights[0] == 'c' && g_flag & G)
+		ft_printf(C_YELLOW"{b}%-*s{R}"C_RESET, width, name);
+	else
+		ft_printf("%-*s", width, name);
+	free(rights);
+	free(tmp);
+}
+
+void		print_columns(t_lst *l, char *path)
+{
+	t_col			s;
+
+	s.row = 0;
+	s.termwidth = 80;
 	if (ioctl(1, TIOCGWINSZ, &win) == 0 && win.ws_col > 0)
-		termwidth = win.ws_col;
-	colwidth = max_length(l) + 1;
-	len = lst_len(l);
-	numcols = termwidth / colwidth - 1;
-	numrows = (len / numcols) == 0 && len != 0 ? 1 : len / numcols;
-	while (row < numrows)
+		s.termwidth = win.ws_col;
+	s.colwidth = max_length(l) + 1;
+	s.len = lst_len(l);
+	s.numcols = s.termwidth / s.colwidth;
+	if (s.numcols)
+		s.numrows = (s.len / s.numcols) == 0 && s.len != 0 ? 1 :\
+					s.len / s.numcols;
+	while (s.row < s.numrows)
 	{
-		while (col < numcols && l)
+		s.col = 0;
+		while (s.col < s.numcols && l)
 		{
-			ft_printf("%-*s", colwidth, l->content);
+			g_flag & G ? g_colors(l->content, path, s.colwidth) :\
+				ft_printf("%-*s", s.colwidth, l->content);
 			l = l->next;
-			col++;
+			s.col++;
 		}
 		ft_putchar('\n');
-		row++;
-		col = 0;
+		s.row++;
 	}
 }
