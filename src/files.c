@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 19:21:57 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/24 13:20:34 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_errors(char *path, int ret, int test)
 	{
 		if (i == 0 && test == 1)
 			ft_fprintf(2, "ls : %s %s\n", path, strerror(errno));
-		return (0);
+		return (i);
 	}
 	else
 		i = 2;
@@ -62,13 +62,27 @@ void		check_args(char **av, int ac, int start, t_lst **paths)
 	printing_files(files, *paths);		
 }
 
-static void	files_space(t_lst **path)
+void		spaces_file(char *name)
 {
-	while (*path)
+	grp = getgrgid(f_stat.st_gid);
+	g_space.one = counting_spaces(g_space.one, (int)f_stat.st_size, 0);
+	g_space.two = counting_spaces(g_space.two, (int)f_stat.st_nlink, 0);
+	g_space.name = counting_spaces(g_space.name, ft_strlen(name), 1);
+	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
+		g_space.user = counting_spaces(g_space.user,\
+				ft_strlen(pwd->pw_name), 1);
+	g_space.group = counting_spaces(g_space.group,\
+			ft_strlen(grp->gr_name), 1);
+
+}
+
+static void	files_space(t_lst *path)
+{
+	while (path)
 	{
-		stat((*path)->content, &f_stat);
-		spaces();
-		*path = (*path)->next;
+		stat(path->content, &f_stat);
+		spaces_file(path->content);
+		path = path->next;
 	}
 }
 void		printing_files(t_lst *path, t_lst *folders)
@@ -90,7 +104,7 @@ void		printing_files(t_lst *path, t_lst *folders)
 	}
 	else if (g_flag & L)
 	{
-		files_space(&path);
+		files_space(path);
 		while (path)
 		{
 			lstat(path->content, &f_stat);
@@ -99,6 +113,8 @@ void		printing_files(t_lst *path, t_lst *folders)
 			free_node(path);
 			path = path->next;
 		}
+		if (folders)
+			ft_putchar('\n');
 	}
 }
 
