@@ -6,26 +6,26 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 18:32:34 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/24 13:56:51 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 #include <stdio.h>
 
-static size_t compute_time(struct tm *l)
+static size_t	compute_time(struct tm *l)
 {
 	size_t	ret;
 
 	ret = ((l->tm_year * 365) * 24 * 3600);
-	ret += (l->tm_mon * 30 *  24) * 3600;
+	ret += (l->tm_mon * 30 * 24) * 3600;
 	ret += (l->tm_mday) * 24 * 3600;
 	ret += (l->tm_hour) * 3600;
 	ret += (l->tm_min) * 60;
 	return (ret);
 }
 
-static void	get_time(struct stat date)
+static void		get_time(struct stat date)
 {
 	char		*f_time;
 	struct tm	*foo;
@@ -53,7 +53,7 @@ static void	get_time(struct stat date)
 	free(f_time);
 }
 
-void		ls_colors(char *name, char *buf, char *rights, int i)
+void			ls_colors(char *name, char *buf, char *rights, int i)
 {
 	if (ft_chmod(rights) / 100 == 7 && rights[0] == '-' && g_flag & G)
 		ft_printf("{r}%s{R}", name);
@@ -71,9 +71,9 @@ void		ls_colors(char *name, char *buf, char *rights, int i)
 		ft_putchar('\n');
 }
 
-void		ft_ls_l(char *name, char *buf, char *path)
+void			ft_ls_l(char *name, char *buf, char *path)
 {
-	char			*rights;
+	char		*rights;
 
 	rights = 0;
 	rights = g_rights(f_stat, rights, path);
@@ -95,7 +95,7 @@ void		ft_ls_l(char *name, char *buf, char *path)
 	free(rights);
 }
 
-void		ft_print_ls(t_lst *head, char *path, int i)
+void			ft_print_ls(t_lst *head, char *path, int i)
 {
 	char	*tmp;
 	char	buf[1000];

@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jallen <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/01/24 13:48:04 by jallen            #+#    #+#              #
+#    Updated: 2019/01/24 13:48:33 by jallen           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 CC = gcc
 
@@ -13,7 +24,9 @@ DIR_O = temporary
 
 DIR_H = includes
 
-SOURCES = merge_sort.c ft_stats.c getpath.c list_tools.c printing.c main.c files.c sort_list.c printing_tools.c
+SOURCES =	merge_sort.c	ft_stats.c		getpath.c 	list_tools.c 	\
+		 	printing.c	main.c files.c	sort_list.c printing_tools.c	\
+			spaces.c
 
 SRCS = $(addprefix $(DIR_S)/, $(SOURCES))
 

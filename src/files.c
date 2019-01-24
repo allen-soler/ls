@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   misc.c                                             :+:      :+:    :+:   */
+/*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/19 15:17:57 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/24 13:20:34 by jallen           ###   ########.fr       */
+/*   Created: 2019/01/24 13:41:25 by jallen            #+#    #+#             */
+/*   Updated: 2019/01/24 13:51:09 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_errors(char *path, int ret, int test)
 	if (!(d = opendir(path)))
 	{
 		if (i == 0 && test == 1)
-			ft_fprintf(2, "ls : %s %s\n", path, strerror(errno));
+			ft_fprintf(2, "ls : %s: %s\n", path, strerror(errno));
 		return (i);
 	}
 	else
@@ -59,21 +59,8 @@ void		check_args(char **av, int ac, int start, t_lst **paths)
 		start++;
 	}
 	sorting(paths, &files);
-	printing_files(files, *paths);		
-}
-
-void		spaces_file(char *name)
-{
-	grp = getgrgid(f_stat.st_gid);
-	g_space.one = counting_spaces(g_space.one, (int)f_stat.st_size, 0);
-	g_space.two = counting_spaces(g_space.two, (int)f_stat.st_nlink, 0);
-	g_space.name = counting_spaces(g_space.name, ft_strlen(name), 1);
-	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
-		g_space.user = counting_spaces(g_space.user,\
-				ft_strlen(pwd->pw_name), 1);
-	g_space.group = counting_spaces(g_space.group,\
-			ft_strlen(grp->gr_name), 1);
-
+	if (files)
+		printing_files(files, *paths);
 }
 
 static void	files_space(t_lst *path)
@@ -85,18 +72,15 @@ static void	files_space(t_lst *path)
 		path = path->next;
 	}
 }
+
 void		printing_files(t_lst *path, t_lst *folders)
 {
 	char	*tmp;
 	char	buf[1000];
 
-	g_space.one = 0;
-	g_space.two = 0;
-	g_space.name = 0;
-	g_space.group = 0;
-	g_space.user = 0;
 	ft_bzero(buf, 1000);
 	tmp = NULL;
+	init();
 	if ((g_flag & L) == 0)
 	{
 		if (folders == NULL || folders->data == 1)

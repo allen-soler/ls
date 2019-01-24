@@ -6,26 +6,11 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 22:19:00 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 18:41:09 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/24 13:42:48 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-
-void		spaces(void)
-{
-	grp = getgrgid(f_stat.st_gid);
-	g_space.one = counting_spaces(g_space.one, (int)f_stat.st_size, 0);
-	g_space.two = counting_spaces(g_space.two, (int)f_stat.st_nlink, 0);
-	g_space.name = counting_spaces(g_space.name, ft_strlen(sd->d_name), 1);
-	if ((pwd = getpwuid(f_stat.st_uid)) != NULL)
-	{
-		g_space.user = counting_spaces(g_space.user,\
-				ft_strlen(pwd->pw_name), 1);
-		g_space.group = counting_spaces(g_space.group,\
-				ft_strlen(grp->gr_name), 1);
-	}
-}
 
 static int	adding_n(int i)
 {
@@ -76,11 +61,7 @@ static void	adding_list(DIR *d, char *path, t_lst **d_path)
 
 	i = 0;
 	head = NULL;
-	g_space.one = 0;
-	g_space.two = 0;
-	g_space.name = 0;
-	g_space.group = 0;
-	g_space.user = 0;
+	init();
 	while ((sd = readdir(d)) != NULL)
 	{
 		tmp = ft_strjoin(path, sd->d_name);

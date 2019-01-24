@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 19:19:34 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/24 13:46:18 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ char				*g_rights(struct stat fstat, char *rights, char *path);
 int					counting_spaces(int spaces, int max, int len);
 int					n_sp(int max, int min, int len);
 void				spaces(void);
-void				nchar(int space, char c);
+void				spaces_file(char *name);
+void				init(void);
 /*
 ** multi file
 */
