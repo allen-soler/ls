@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/24 17:52:37 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/26 15:21:40 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,8 @@ void			ft_ls_l(char *name, char *buf, char *path)
 
 void			print_one(t_lst *current)
 {
-	while(current)
+	while (current)
 	{
-
 		ft_printf("%s\n", current->content);
 		current = current->next;
 	}

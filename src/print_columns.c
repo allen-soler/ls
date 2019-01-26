@@ -6,7 +6,7 @@
 /*   By: nalonso <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 14:40:55 by nalonso           #+#    #+#             */
-/*   Updated: 2019/01/24 17:53:17 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/26 15:17:29 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,23 @@ void		g_colors(char *name, char *path, int width)
 	free(tmp);
 }
 
+void		print_correct(t_lst *l, t_col s, char *path)
+{
+	t_lst	*tmp;
+
+	tmp = NULL;
+	if (l)
+	{
+		if (s.col == 0)
+			tmp = get_nth_elem(l, s.row);
+		else
+			tmp = get_nth_elem(l, (s.row + (s.numrows * s.col)));
+		if (tmp)
+			g_flag & G ? g_colors(tmp->content, path, s.colwidth) :\
+				ft_printf("%-*s", s.colwidth, tmp->content);
+	}
+}
+
 void		print_columns(t_lst *l, char *path)
 {
 	t_col			s;
@@ -76,15 +93,13 @@ void		print_columns(t_lst *l, char *path)
 	s.numcols = s.termwidth / s.colwidth;
 	if (s.numcols)
 		s.numrows = (s.len / s.numcols) == 0 && s.len != 0 ? 1 :\
-					s.len / s.numcols;
-	while (s.row < s.numrows)
+					s.len / s.numcols + 1;
+	while (s.row < s.numrows && l)
 	{
 		s.col = 0;
 		while (s.col < s.numcols && l)
 		{
-			g_flag & G ? g_colors(l->content, path, s.colwidth) :\
-				ft_printf("%-*s", s.colwidth, l->content);
-			l = l->next;
+			print_correct(l, s, path);
 			s.col++;
 		}
 		ft_putchar('\n');

@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/24 16:55:36 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/26 15:16:31 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_lst				*new_node(char *name, int data);
 void				lst_add(t_lst **head, t_lst *new);
 void				ft_print(t_lst *root);
 void				free_list(t_lst *head);
+t_lst				*get_nth_elem(t_lst *l, int n);
 void				free_node(t_lst *head);
 /*
 **sort

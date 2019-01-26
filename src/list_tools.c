@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 16:29:17 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 17:59:38 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/26 15:21:16 by nalonso          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ t_lst	*new_node(char *name, int data)
 	new_node->data = data;
 	new_node->next = NULL;
 	return (new_node);
+}
+
+t_lst	*get_nth_elem(t_lst *l, int n)
+{
+	while (n && l)
+	{
+		l = l->next;
+		--n;
+	}
+	return (l);
 }
 
 void	lst_add(t_lst **head, t_lst *new)
