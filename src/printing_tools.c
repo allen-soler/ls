@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 13:59:09 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/23 14:01:11 by jallen           ###   ########.fr       */
+/*   Updated: 2019/01/26 15:35:13 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,19 @@ int		n_sp(int max, int min, int len)
 	else if (len == 1)
 		max = max - min + 1;
 	return (max);
+}
+
+void	print_one(t_lst *current, char *path)
+{
+	while (current)
+	{
+		if (g_flag & G)
+		{
+			g_colors(current->content, path, 0);
+			ft_putchar('\n');
+		}
+		else
+			ft_printf("%s\n", current->content);
+		current = current->next;
+	}
 }

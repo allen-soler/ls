@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 23:27:12 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/26 15:16:31 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/26 15:38:41 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define G (1 << 5)
 # define F (1 << 6)
 # define ONE (1 << 7)
+# define C (1 << 8)
 
 struct dirent	*sd;
 struct stat		f_stat;
@@ -113,6 +114,8 @@ void				ft_ls_l(char *name, char *buf, char *path);
 void				print_columns(t_lst *l, char *path);
 void				ls_colors(char *name, char *buf, char *rights, int i);
 int					num_len(int nb);
+void				print_one(t_lst *current, char *path);
+void				g_colors(char *name, char *path, int width);
 /*
 **stats
 */

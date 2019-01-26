@@ -6,7 +6,7 @@
 /*   By: jallen <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 13:07:02 by jallen            #+#    #+#             */
-/*   Updated: 2019/01/26 15:21:40 by nalonso          ###   ########.fr       */
+/*   Updated: 2019/01/26 15:34:46 by jallen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void			ft_ls_l(char *name, char *buf, char *path)
 	ft_printf("%*d ", g_space.two, (int)f_stat.st_nlink);
 	if ((pwd = getpwuid(f_stat.st_uid)))
 		ft_printf("%-*s%-*s", g_space.user + 2, pwd->pw_name,\
-			g_space.group, grp->gr_name);
+				g_space.group, grp->gr_name);
 	else
 		ft_printf("      %*-s", g_space.group, grp->gr_name);
 	if (S_ISCHR(f_stat.st_mode) || S_ISBLK(f_stat.st_mode))
@@ -97,15 +97,6 @@ void			ft_ls_l(char *name, char *buf, char *path)
 	free(rights);
 }
 
-void			print_one(t_lst *current)
-{
-	while (current)
-	{
-		ft_printf("%s\n", current->content);
-		current = current->next;
-	}
-}
-
 void			ft_print_ls(t_lst *head, char *path, int i)
 {
 	char	*tmp;
@@ -113,7 +104,7 @@ void			ft_print_ls(t_lst *head, char *path, int i)
 
 	ft_bzero(buf, 1000);
 	if (g_flag & ONE)
-		print_one(head);
+		print_one(head, path);
 	else if (g_flag & L && (ONE & g_flag) == 0)
 	{
 		if (head)
